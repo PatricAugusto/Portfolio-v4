@@ -15,7 +15,7 @@ export function Projects() {
         <SectionHeading
           tag="Projetos"
           title="Soluções que entreguei"
-          description="Projetos que demonstram minha capacidade de construir aplicações completas — do design system ao deploy em produção."
+          description="Projetos que demonstram minha capacidade de construir aplicações completas, do design system ao deploy em produção."
         />
 
         <div className="grid gap-6 lg:grid-cols-2">

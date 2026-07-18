@@ -24,8 +24,8 @@ export const siteConfig = {
   role: "Desenvolvedor Web Full Stack",
   tagline: "Arquitetura escalável. Performance. Inteligência.",
   email: "desenvolvedorpatric@gmail.com",
-  github: "https://github.com",
-  linkedin: "https://linkedin.com",
+  github: "https://github.com/PatricAugusto",
+  linkedin: "https://www.linkedin.com/in/patric-augusto-bab47b240/",
   location: "Brasil",
 };
 
@@ -51,56 +51,53 @@ export const skills: Skill[] = [
   { name: "OpenAI", category: "ai", icon: "openai" },
   { name: "LangChain", category: "ai", icon: "langchain" },
   { name: "Git", category: "tools", icon: "git" },
-  { name: "Docker", category: "tools", icon: "docker" },
 ];
 
 export const projects: Project[] = [
   {
     id: "1",
-    title: "SaaS Dashboard",
+    title: "Buscador de empresas por CNPJ",
     description:
-      "Plataforma de analytics em tempo real com Next.js App Router, autenticação JWT e cache inteligente via Redis.",
-    tags: ["Next.js", "React", "Node.js", "PostgreSQL"],
-    link: "#",
-    github: "#",
+      "API REST para consulta e gerenciamento de dados públicos de empresas brasileiras via CNPJ. Consome a BrasilAPI, persiste os dados localmente e expõe endpoints de busca com paginação e suporte a favoritos.",
+    tags: ["Node.js (18+)", "Express", "SQLite", "BrasilAPI", "dotenv", "nodemon"],
+    github: "https://github.com/PatricAugusto/Buscador-de-empresas-por-CNPJ",
     featured: true,
   },
   {
     id: "2",
-    title: "AI Content Engine",
+    title: "API de Receitas com IA",
     description:
-      "Motor de geração de conteúdo com integração OpenAI, filas assíncronas e API REST escalável em Express.",
-    tags: ["Node.js", "Express", "OpenAI", "MySQL"],
-    link: "#",
-    github: "#",
+      "API REST desenvolvida com Node.js e Express que utiliza inteligência artificial para sugerir receitas com base nos ingredientes que o usuário tem disponíveis.",
+    tags: ["Node.js", "Express", "Groq API", "dotenv"],
+    github: "https://github.com/PatricAugusto/API-de-Receita-com-IA",
     featured: true,
   },
   {
     id: "3",
-    title: "E-commerce Headless",
+    title: "O Corte Perfeito",
     description:
-      "Loja virtual headless com SSR, carrinho persistente e arquitetura de microserviços containerizada.",
-    tags: ["Next.js", "React", "SQL", "Docker"],
-    link: "#",
-    github: "#",
+      "Este projeto representa uma vitrine digital, refletindo a qualidade, elegância e a experiência impecável que oferecemos a cada cliente.",
+    tags: ["React", "Vite", "TypeScript", "shadcn/ui", "Tailwind CSS"],
+    link: "https://barber-glass-neo.vercel.app/",
+    github: "https://github.com/PatricAugusto/barber-glass-neo",
     featured: true,
   },
   {
     id: "4",
-    title: "DevOps Pipeline",
+    title: "Studio Forma",
     description:
-      "CI/CD automatizado com testes E2E, deploy contínuo e monitoramento de performance em produção.",
-    tags: ["Node.js", "Docker", "Git", "Express"],
-    link: "#",
-    github: "#",
-    featured: false,
+      "UI neo-minimalista para um estúdio de product design, construída com Next.js 14, styled-components e Framer Motion.",
+    tags: ["Next.js", "TypeScript", "Styled-components", "Framer Motion", "Lucide React"],
+    link: "https://forma-studio-ruby.vercel.app/",
+    github: "https://github.com/PatricAugusto/Forma-Studio",
+    featured: true,
   },
 ];
 
 export const aboutStats = [
   { label: "Anos de experiência", value: "3+" },
-  { label: "Projetos entregues", value: "20+" },
-  { label: "Stack principal", value: "Full Stack" },
+  { label: "Projetos", value: "200+" },
+  { label: "Stack principal", value: "Full Stack and IA" },
   { label: "Disponibilidade", value: "Remoto" },
 ];
 

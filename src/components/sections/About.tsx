@@ -13,7 +13,7 @@ const pillars = [
     icon: Layers,
     title: "Arquitetura Escalável",
     description:
-      "Estruturo aplicações pensando em crescimento — desde monolitos modulares até microserviços containerizados.",
+      "Estruturo aplicações pensando em crescimento, desde monolitos modulares até microserviços containerizados.",
   },
   {
     icon: Zap,
@@ -96,7 +96,7 @@ export function About() {
               Sou{" "}
               <span className="font-semibold text-white">{siteConfig.name}</span>
               , {siteConfig.role.toLowerCase()} com foco em soluções web
-              escaláveis — unindo frontend reativo, backend sólido e integração
+              escaláveis, unindo frontend reativo, backend sólido e integração
               inteligente com IA.
             </p>
             <p className="text-sm leading-relaxed text-slate sm:text-base">

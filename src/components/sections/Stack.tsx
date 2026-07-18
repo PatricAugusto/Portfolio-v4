@@ -91,7 +91,7 @@ export function Stack() {
         <SectionHeading
           tag="Stack"
           title="Tecnologias que domino"
-          description="Um ecossistema completo para construir aplicações web de ponta a ponta — do frontend reativo ao backend robusto, bancos de dados e inteligência artificial."
+          description="Um ecossistema completo para construir aplicações web de ponta a ponta, do frontend reativo ao backend robusto, bancos de dados e inteligência artificial."
           align="center"
         />
 
