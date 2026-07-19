@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
 import { siteConfig } from "@/data/portfolio";
@@ -17,13 +18,13 @@ const contactLinks = [
   {
     icon: Github,
     label: "GitHub",
-    value: "github.com/alexdev",
+    value: "github.com/PatricAugusto",
     href: siteConfig.github,
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
-    value: "linkedin.com/in/alexdev",
+    value: "linkedin.com/in/PatricAugusto",
     href: siteConfig.linkedin,
   },
   {
@@ -35,6 +36,41 @@ const contactLinks = [
 ];
 
 export function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    const formData = new FormData(e.target);
+    
+    // Configuração do Web3Forms - Insira sua chave de acesso aqui
+    formData.append("access_key", "94347aad-b4af-4cda-a7e4-17f9197c5283");
+    formData.append("from_name", "Portfolio - Contato");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus("success");
+        e.target.reset();
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[400px] bg-gradient-to-t from-blue-deep/10 to-transparent" />
@@ -99,10 +135,15 @@ export function Contact() {
             className="lg:col-span-3"
           >
             <GlassCard className="h-full" glow>
-              <form
-                className="space-y-5"
-                onSubmit={(e) => e.preventDefault()}
-              >
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                {/* Anti-Spam Honeypot (Segurança ISO) - Invisível para humanos */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  className="hidden"
+                  style={{ display: "none" }}
+                />
+
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label
@@ -113,7 +154,9 @@ export function Contact() {
                     </label>
                     <input
                       id="name"
+                      name="name"
                       type="text"
+                      required
                       placeholder="Seu nome"
                       className="glass w-full rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-blue-primary/50 focus:outline-none focus:ring-1 focus:ring-blue-primary/30"
                     />
@@ -127,7 +170,9 @@ export function Contact() {
                     </label>
                     <input
                       id="email"
+                      name="email"
                       type="email"
+                      required
                       placeholder="seu@email.com"
                       className="glass w-full rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-blue-primary/50 focus:outline-none focus:ring-1 focus:ring-blue-primary/30"
                     />
@@ -142,15 +187,49 @@ export function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={5}
+                    required
                     placeholder="Conte sobre seu projeto..."
                     className="glass w-full resize-none rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-blue-primary/50 focus:outline-none focus:ring-1 focus:ring-blue-primary/30"
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full sm:w-auto">
-                  <Send size={16} />
-                  Enviar mensagem
-                </Button>
+
+                {/* Consentimento LGPD */}
+                <div className="flex items-start gap-3">
+                  <input
+                    id="privacy"
+                    type="checkbox"
+                    required
+                    className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-blue-primary focus:ring-0 focus:ring-offset-0"
+                  />
+                  <label htmlFor="privacy" className="text-xs text-white/50 leading-tight">
+                    Concordo em fornecer estes dados para receber o retorno do meu contato, em conformidade com as diretrizes de privacidade.
+                  </label>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    disabled={isSubmitting}
+                  >
+                    <Send size={16} className={isSubmitting ? "animate-pulse" : ""} />
+                    {isSubmitting ? "Enviando..." : "Enviar mensagem"}
+                  </Button>
+
+                  {submitStatus === "success" && (
+                    <p className="text-sm text-green-400 font-medium">
+                      Mensagem enviada com sucesso!
+                    </p>
+                  )}
+                  {submitStatus === "error" && (
+                    <p className="text-sm text-red-400 font-medium">
+                      Falha ao enviar. Tente novamente mais tarde.
+                    </p>
+                  )}
+                </div>
               </form>
             </GlassCard>
           </motion.div>
