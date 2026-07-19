@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
 import { siteConfig } from "@/data/portfolio";
@@ -36,41 +36,46 @@ const contactLinks = [
 ];
 
 export function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null,
+  );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
-
-    const formData = new FormData(e.target);
-    
-    // Configuração do Web3Forms - Insira sua chave de acesso aqui
-    formData.append("access_key", "94347aad-b4af-4cda-a7e4-17f9197c5283");
-    formData.append("from_name", "Portfolio - Contato");
-
+  
+    // Usamos e.currentTarget para garantir o tipo correto do elemento do formulário
+    const formData = new FormData(e.currentTarget);
+    const formObject = Object.fromEntries(formData.entries());
+  
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
       });
-
+  
       const data = await response.json();
-
-      if (data.success) {
+  
+      if (response.ok && data.success) {
         setSubmitStatus("success");
-        e.target.reset();
+        e.currentTarget.reset(); // Limpa o formulário de forma segura
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch (err) {
+      // 4. Resolvendo o ESLint: registrando o erro no console ou omitindo-o se não for usar
+      console.error("Erro no envio do formulário:", err);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <section id="contact" className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[400px] bg-gradient-to-t from-blue-deep/10 to-transparent" />
@@ -203,8 +208,13 @@ export function Contact() {
                     required
                     className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-blue-primary focus:ring-0 focus:ring-offset-0"
                   />
-                  <label htmlFor="privacy" className="text-xs text-white/50 leading-tight">
-                    Concordo em fornecer estes dados para receber o retorno do meu contato, em conformidade com as diretrizes de privacidade.
+                  <label
+                    htmlFor="privacy"
+                    className="text-xs text-white/50 leading-tight"
+                  >
+                    Concordo em fornecer estes dados para receber o retorno do
+                    meu contato, em conformidade com as diretrizes de
+                    privacidade.
                   </label>
                 </div>
 
@@ -215,7 +225,10 @@ export function Contact() {
                     className="w-full sm:w-auto"
                     disabled={isSubmitting}
                   >
-                    <Send size={16} className={isSubmitting ? "animate-pulse" : ""} />
+                    <Send
+                      size={16}
+                      className={isSubmitting ? "animate-pulse" : ""}
+                    />
                     {isSubmitting ? "Enviando..." : "Enviar mensagem"}
                   </Button>
 
