@@ -92,6 +92,16 @@ export const projects: Project[] = [
     github: "https://github.com/PatricAugusto/Forma-Studio",
     featured: true,
   },
+  {
+    id: "5",
+    title: "Hydro ZAP ",
+    description:
+      "HYDRO+ZAP ajuda a manter o consumo diário de água e cafeína equilibrado. Registre doses com um toque, acompanhe o progresso em tempo real e revise seu histórico em um calendário — tudo salvo localmente, sem servidor.",
+    tags: ["Next.js", "TypeScript", "Styled-components", "localStorage"],
+    link: "https://hydro-caffeine-sag3-henna.vercel.app/",
+    github: "https://github.com/PatricAugusto/Hydro-Caffeine",
+    featured: true,
+  },
 ];
 
 export const aboutStats = [
