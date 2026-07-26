@@ -74,12 +74,12 @@ export const projects: Project[] = [
   },
   {
     id: "3",
-    title: "O Corte Perfeito",
+    title: "Merchandising Co. — Site Institucional",
     description:
-      "Este projeto representa uma vitrine digital, refletindo a qualidade, elegância e a experiência impecável que oferecemos a cada cliente.",
-    tags: ["React", "Vite", "TypeScript", "shadcn/ui", "Tailwind CSS"],
-    link: "https://barber-glass-neo.vercel.app/",
-    github: "https://github.com/PatricAugusto/barber-glass-neo",
+      "Site institucional para uma empresa fictícia de merchandising personalizado, desenvolvido como projeto de portfólio (MVP). Design dark mode luxuoso: fundo escuro, cartões sólidos elevados, tipografia serifada nos títulos e dourado como cor de destaque única.",
+    tags: ["Next.js (App Router)", "TypeScript", "styled-components", "lucide-react", "Pexels"],
+    link: "https://site-merchandising.vercel.app/",
+    github: "https://github.com/PatricAugusto/Site-Merchandising",
     featured: true,
   },
   {
