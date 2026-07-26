@@ -39,18 +39,24 @@ export function Projects() {
                       />
                     </div>
                     <div className="flex gap-2">
+                      {/* Link do GitHub */}
                       {project.github && (
                         <a
                           href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/40 transition-colors hover:border-white/20 hover:text-white"
                           aria-label={`GitHub - ${project.title}`}
                         >
                           <Github size={16} />
                         </a>
                       )}
+                      {/* Link da Demo / Projeto Externo */}
                       {project.link && (
                         <a
                           href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/40 transition-colors hover:border-white/20 hover:text-white"
                           aria-label={`Demo - ${project.title}`}
                         >
