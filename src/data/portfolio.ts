@@ -111,10 +111,10 @@ export const aboutStats = [
   { label: "Disponibilidade", value: "Remoto" },
 ];
 
-export const categoryLabels: Record<Skill["category"], string> = {
-  frontend: "Frontend",
-  backend: "Backend",
-  database: "Banco de Dados",
+export const categoryLabels: Record<string, string> = {
+  frontend: "Frontend Development",
+  backend: "Backend & APIs",
+  database: "Bancos de Dados",
   ai: "Inteligência Artificial",
-  tools: "Ferramentas",
+  tools: "Ferramentas & DevOps",
 };
