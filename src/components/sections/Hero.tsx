@@ -57,14 +57,37 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* Badges Animadas */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
             {techBadges.map((tech, i) => (
               <motion.span
                 key={tech}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
-                className="glass rounded-lg px-3 py-1.5 font-mono text-xs text-white/50"
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{
+                  opacity: 1,
+                  y: [0, -4, 0],
+                  scale: 1,
+                }}
+                transition={{
+                  // Transição inicial de entrada
+                  opacity: { duration: 0.4, delay: 0.6 + i * 0.08 },
+                  scale: { duration: 0.4, delay: 0.6 + i * 0.08 },
+                  // Animação de flutuação infinita
+                  y: {
+                    duration: 3.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut",
+                    delay: 1.0 + i * 0.2, // Offset para não flutuarem todas juntas
+                  },
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                  borderColor: "rgba(255, 255, 255, 0.25)",
+                  transition: { duration: 0.2, ease: "easeOut" },
+                }}
+                className="glass cursor-default rounded-lg border border-silver/10 px-3.5 py-1.5 font-mono text-xs text-white/50 transition-colors hover:text-white/80 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)]"
               >
                 {tech}
               </motion.span>
