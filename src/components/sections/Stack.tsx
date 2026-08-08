@@ -6,13 +6,21 @@ import {
   SiNextdotjs,
   SiReact,
   SiTypescript,
+  SiJavascript,
   SiTailwindcss,
+  SiStyledcomponents,
+  SiThreedotjs,
   SiNodedotjs,
   SiExpress,
+  SiSocketdotio,
   SiPostgresql,
   SiMysql,
+  SiSqlite,
+  SiPrisma,
   SiLangchain,
   SiGit,
+  SiGithub,
+  SiDocker,
 } from "react-icons/si";
 import { TbApi, TbSql } from "react-icons/tb";
 
@@ -43,16 +51,24 @@ const iconMap: Record<string, React.ElementType> = {
   nextjs: SiNextdotjs,
   react: SiReact,
   typescript: SiTypescript,
+  javascript: SiJavascript,
   tailwind: SiTailwindcss,
+  styledcomponents: SiStyledcomponents,
+  threejs: SiThreedotjs,
   nodejs: SiNodedotjs,
   express: SiExpress,
   api: TbApi,
+  socketio: SiSocketdotio,
   postgresql: SiPostgresql,
   mysql: SiMysql,
+  sqlite: SiSqlite,
+  prisma: SiPrisma,
   sql: TbSql,
   openai: OpenAiIcon,
   langchain: SiLangchain,
   git: SiGit,
+  github: SiGithub,
+  docker: SiDocker,
 };
 
 function SkillIcon({ icon }: { icon: string }) {
@@ -80,7 +96,7 @@ function FloatingSkillCard({
       initial={{ opacity: 0, y: 24, scale: 0.92 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay: index * 0.06, duration: 0.45, ease: "easeOut" }}
+      transition={{ delay: index * 0.05, duration: 0.45, ease: "easeOut" }}
       whileHover={{ y: -6, scale: 1.04 }}
       className={cn(
         "stack-float-card glass glass-hover group relative flex w-33 flex-col items-center gap-3 rounded-2xl px-4 py-5 sm:w-37",
@@ -156,8 +172,8 @@ export function Stack() {
         >
           <div className="stack-float-card glass glow-blue rounded-2xl px-6 py-4 text-center">
             <p className="font-mono text-sm text-white/50">
-              <span className="text-cyan-glow">→</span> Frontend reativo{" "}
-              <span className="text-white/30">·</span> APIs RESTful{" "}
+              <span className="text-cyan-glow">→</span> Frontend 3D & Reativo{" "}
+              <span className="text-white/30">·</span> APIs RESTful & Realtime{" "}
               <span className="text-white/30">·</span> SGBDs relacionais{" "}
               <span className="text-white/30">·</span> Pipelines de IA
             </p>

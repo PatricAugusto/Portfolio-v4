@@ -38,19 +38,36 @@ export const navLinks: NavLink[] = [
 ];
 
 export const skills: Skill[] = [
+  // Frontend
   { name: "Next.js", category: "frontend", icon: "nextjs" },
   { name: "React.js", category: "frontend", icon: "react" },
   { name: "TypeScript", category: "frontend", icon: "typescript" },
+  { name: "JavaScript", category: "frontend", icon: "javascript" },
   { name: "Tailwind CSS", category: "frontend", icon: "tailwind" },
+  { name: "Styled Components", category: "frontend", icon: "styledcomponents" },
+  { name: "Three.js", category: "frontend", icon: "threejs" },
+
+  // Backend
   { name: "Node.js", category: "backend", icon: "nodejs" },
   { name: "Express", category: "backend", icon: "express" },
   { name: "REST APIs", category: "backend", icon: "api" },
+  { name: "Socket.io", category: "backend", icon: "socketio" },
+
+  // Database
   { name: "PostgreSQL", category: "database", icon: "postgresql" },
   { name: "MySQL", category: "database", icon: "mysql" },
+  { name: "SQLite", category: "database", icon: "sqlite" },
+  { name: "Prisma", category: "database", icon: "prisma" },
   { name: "SQL", category: "database", icon: "sql" },
+
+  // AI
   { name: "OpenAI", category: "ai", icon: "openai" },
   { name: "LangChain", category: "ai", icon: "langchain" },
+
+  // Tools & DevOps
   { name: "Git", category: "tools", icon: "git" },
+  { name: "GitHub", category: "tools", icon: "github" },
+  { name: "Docker", category: "tools", icon: "docker" },
 ];
 
 export const projects: Project[] = [
