@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Code2, Layers, Rocket, Zap } from "lucide-react";
+import { Code2, Cpu, Database, Layers, Rocket, Zap } from "lucide-react";
 import { aboutStats, siteConfig } from "@/data/portfolio";
 import profileImage from "@/assets/profile.png";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -11,27 +11,39 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const pillars = [
   {
     icon: Layers,
-    title: "Arquitetura Escalável",
+    title: "Arquitetura & Clean Code",
     description:
-      "Estruturo aplicações pensando em crescimento, desde monolitos modulares até microserviços containerizados.",
+      "Aplicações estruturadas com TypeScript, padrões SOLID e arquitetura modular, garantindo código limpo, manutenível e escalável.",
   },
   {
     icon: Zap,
-    title: "Performance First",
+    title: "Performance & Experiência",
     description:
-      "SSR, ISR e otimizações de bundle com Next.js para entregar experiências rápidas e fluidas.",
+      "Renderização otimizada com Next.js (SSR/ISR), bundles enxutos e Tailwind CSS para interfaces fluidas e de altíssimo rendimento.",
   },
   {
-    icon: Code2,
-    title: "Código Limpo",
+    icon: Database,
+    title: "Backend & Dados Robustos",
     description:
-      "TypeScript, padrões SOLID e testes automatizados garantem manutenibilidade a longo prazo.",
+      "APIs RESTful e microsserviços em Node.js e Express, integrados com ORMs modernos (Prisma) e bancos SQL (PostgreSQL, SQLite).",
   },
   {
     icon: Rocket,
-    title: "Integração com IA",
+    title: "Engenharia de IA & LLMs",
     description:
-      "Implemento soluções inteligentes com LLMs, automação de fluxos e APIs de IA em produção.",
+      "Integração de inteligência artificial aplicada em produção com OpenAI API e LangChain para automação e novos modelos de produto.",
+  },
+  {
+    icon: Cpu,
+    title: "Realtime & Eventos",
+    description:
+      "Comunicação bidirecional e baixa latência utilizando Socket.io para dashboards interativos, chats e atualizações em tempo real.",
+  },
+  {
+    icon: Code2,
+    title: "Interfaces Modernas & 3D",
+    description:
+      "Construção de ecossistemas visuais marcantes combinando Styled Components, Styled UI e renderizações dinâmicas com Three.js.",
   },
 ];
 
@@ -122,12 +134,12 @@ export function About() {
           </motion.div>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((pillar, i) => (
             <motion.div
               key={pillar.title}
               {...fadeUp}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              transition={{ delay: i * 0.08, duration: 0.5 }}
             >
               <GlassCard className="h-full">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-silver/20 bg-silver/5">
