@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-20 pb-28 sm:pb-20"
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-50" />
 
@@ -69,16 +69,14 @@ export function Hero() {
                   scale: 1,
                 }}
                 transition={{
-                  // Transição inicial de entrada
                   opacity: { duration: 0.4, delay: 0.6 + i * 0.08 },
                   scale: { duration: 0.4, delay: 0.6 + i * 0.08 },
-                  // Animação de flutuação infinita
                   y: {
                     duration: 3.5,
                     repeat: Infinity,
                     repeatType: "reverse",
                     ease: "easeInOut",
-                    delay: 1.0 + i * 0.2, // Offset para não flutuarem todas juntas
+                    delay: 1.0 + i * 0.2,
                   },
                 }}
                 whileHover={{
@@ -94,18 +92,19 @@ export function Hero() {
             ))}
           </div>
         </motion.div>
-
-        <motion.a
-          href="#about"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 transition-colors hover:text-warm"
-          aria-label="Rolar para baixo"
-        >
-          <ArrowDown size={24} className="animate-bounce" />
-        </motion.a>
       </div>
+
+      {/* Seta posicionada em relação à Section inteira com espaçamento seguro no mobile */}
+      <motion.a
+        href="#about"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 p-2 text-white/30 transition-colors hover:text-warm sm:bottom-8"
+        aria-label="Rolar para baixo"
+      >
+        <ArrowDown size={24} className="animate-bounce" />
+      </motion.a>
     </section>
   );
 }
