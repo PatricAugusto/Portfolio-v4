@@ -139,14 +139,18 @@ export function About() {
             <motion.div
               key={pillar.title}
               {...fadeUp}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ delay: i * 0.08, duration: 0.3, ease: "easeOut" }}
+              className="group"
             >
-              <GlassCard className="h-full">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-silver/20 bg-silver/5">
-                  <pillar.icon size={20} className="text-warm" />
+              <GlassCard className="h-full transition-colors duration-300 group-hover:border-silver/30">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-silver/20 bg-silver/5 transition-colors duration-300 group-hover:border-warm/40 group-hover:bg-warm/10">
+                  <pillar.icon size={20} className="text-warm transition-transform duration-300 group-hover:scale-110" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold">{pillar.title}</h3>
-                <p className="text-sm leading-relaxed text-white/55">
+                <h3 className="mb-2 text-lg font-semibold transition-colors duration-300 group-hover:text-white">
+                  {pillar.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-white/55 transition-colors duration-300 group-hover:text-white/75">
                   {pillar.description}
                 </p>
               </GlassCard>
