@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, type MouseEvent } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Code2, Cpu, Database, Layers, Rocket, Zap } from "lucide-react";
@@ -13,37 +14,37 @@ const pillars = [
     icon: Layers,
     title: "Arquitetura & Clean Code",
     description:
-      "Aplicações estruturadas com TypeScript, padrões SOLID e arquitetura modular, garantindo código limpo, manutenível e escalável.",
+      "Bases sólidas em TypeScript e princípios SOLID, com arquitetura modular pensada para crescer sem acumular dívida técnica.",
   },
   {
     icon: Zap,
     title: "Performance & Experiência",
     description:
-      "Renderização otimizada com Next.js (SSR/ISR), bundles enxutos e Tailwind CSS para interfaces fluidas e de altíssimo rendimento.",
+      "Next.js com SSR e ISR, bundles enxutos e Tailwind CSS trabalhando juntos para interfaces rápidas do primeiro ao último pixel.",
   },
   {
     icon: Database,
     title: "Backend & Dados Robustos",
     description:
-      "APIs RESTful e microsserviços em Node.js e Express, integrados com ORMs modernos (Prisma) e bancos SQL (PostgreSQL, SQLite).",
+      "APIs RESTful e microsserviços em Node.js e Express, com Prisma orquestrando dados em PostgreSQL e SQLite de forma tipada.",
   },
   {
     icon: Rocket,
     title: "Engenharia de IA & LLMs",
     description:
-      "Integração de inteligência artificial aplicada em produção com OpenAI API e LangChain para automação e novos modelos de produto.",
+      "IA aplicada em produção de verdade: OpenAI API e LangChain orquestrando automações e novos fluxos de produto.",
   },
   {
     icon: Cpu,
     title: "Realtime & Eventos",
     description:
-      "Comunicação bidirecional e baixa latência utilizando Socket.io para dashboards interativos, chats e atualizações em tempo real.",
+      "Socket.io para comunicação bidirecional de baixa latência — dashboards, chats e eventos que atualizam sozinhos, em tempo real.",
   },
   {
     icon: Code2,
     title: "Interfaces Modernas & 3D",
     description:
-      "Construção de ecossistemas visuais marcantes combinando Styled Components, Styled UI e renderizações dinâmicas com Three.js.",
+      "Ecossistemas visuais marcantes com Styled Components e renderizações 3D em Three.js, onde a interface também é produto.",
   },
 ];
 
@@ -81,7 +82,7 @@ export function About() {
                 fill
                 priority
                 sizes="(max-width: 1024px) 380px, 380px"
-                className="object-cover object-[center_15%] scale-105 transition-transform duration-700 hover:scale-100"
+                className="scale-105 object-cover object-[center_15%] transition-transform duration-700 hover:scale-100"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-void via-void/20 to-transparent" />
@@ -119,16 +120,21 @@ export function About() {
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               {aboutStats.map((stat, i) => (
-                <GlassCard
+                <motion.div
                   key={stat.label}
-                  className="text-center !p-4"
-                  glow={i === 0}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: i * 0.06, duration: 0.4 }}
+                  whileHover={{ y: -3 }}
                 >
-                  <p className="text-gradient text-xl font-bold sm:text-2xl">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-xs text-slate">{stat.label}</p>
-                </GlassCard>
+                  <GlassCard className="text-center !p-4" glow={i === 0}>
+                    <p className="text-gradient text-xl font-bold sm:text-2xl">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-xs text-slate">{stat.label}</p>
+                  </GlassCard>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -136,28 +142,71 @@ export function About() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((pillar, i) => (
-            <motion.div
-              key={pillar.title}
-              {...fadeUp}
-              whileHover={{ y: -6, scale: 1.02 }}
-              transition={{ delay: i * 0.08, duration: 0.3, ease: "easeOut" }}
-              className="group"
-            >
-              <GlassCard className="h-full transition-colors duration-300 group-hover:border-silver/30">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-silver/20 bg-silver/5 transition-colors duration-300 group-hover:border-warm/40 group-hover:bg-warm/10">
-                  <pillar.icon size={20} className="text-warm transition-transform duration-300 group-hover:scale-110" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold transition-colors duration-300 group-hover:text-white">
-                  {pillar.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-white/55 transition-colors duration-300 group-hover:text-white/75">
-                  {pillar.description}
-                </p>
-              </GlassCard>
-            </motion.div>
+            <PillarCard key={pillar.title} pillar={pillar} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function PillarCard({
+  pillar,
+  index,
+}: {
+  pillar: (typeof pillars)[number];
+  index: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const Icon = pillar.icon;
+
+  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+    const bounds = cardRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+    cardRef.current?.style.setProperty("--spot-x", `${x}%`);
+    cardRef.current?.style.setProperty("--spot-y", `${y}%`);
+  }
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      {...fadeUp}
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ delay: index * 0.08, duration: 0.3, ease: "easeOut" }}
+      className="group [--spot-x:50%] [--spot-y:50%]"
+    >
+      <GlassCard className="relative h-full overflow-hidden transition-colors duration-300 group-hover:border-silver/30">
+        {/* spotlight que segue o cursor, mesma técnica do Projects */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              "radial-gradient(220px circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--color-warm) 14%, transparent), transparent 70%)",
+          }}
+        />
+
+        <div className="relative mb-4 flex h-11 w-11 items-center justify-center">
+          <span className="pointer-events-none absolute inset-0 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover:bg-warm/25" />
+          <span className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-silver/20 bg-silver/5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-colors duration-300 group-hover:border-warm/40 group-hover:bg-warm/10">
+            <Icon
+              size={20}
+              className="text-warm transition-transform duration-300 group-hover:scale-110"
+            />
+          </span>
+        </div>
+
+        <h3 className="relative mb-2 text-lg font-semibold transition-colors duration-300 group-hover:text-white">
+          {pillar.title}
+        </h3>
+        <p className="relative text-sm leading-relaxed text-white/55 transition-colors duration-300 group-hover:text-white/75">
+          {pillar.description}
+        </p>
+      </GlassCard>
+    </motion.div>
   );
 }
