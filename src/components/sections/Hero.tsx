@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, type MouseEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { siteConfig } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
@@ -8,15 +9,73 @@ import { Button } from "@/components/ui/Button";
 const techBadges = ["Next.js", "React", "Node.js", "Express", "SQL", "IA"];
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  function handleMouseMove(event: MouseEvent<HTMLElement>) {
+    const x = (event.clientX / window.innerWidth - 0.5) * 2;
+    const y = (event.clientY / window.innerHeight - 0.5) * 2;
+    sectionRef.current?.style.setProperty("--mx", x.toFixed(3));
+    sectionRef.current?.style.setProperty("--my", y.toFixed(3));
+  }
+
   return (
     <section
       id="hero"
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-20 pb-28 sm:pb-20"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-50" />
+      <style>{`
+        @keyframes aurora-drift-a {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(30px, -20px) scale(1.08); }
+        }
+        @keyframes aurora-drift-b {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-24px, 18px) scale(1.05); }
+        }
+      `}</style>
 
-      <div className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-silver/8 blur-[120px]" />
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[300px] w-[300px] rounded-full bg-warm/5 blur-[100px]" />
+      <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" />
+
+      {/* grão sutil pra dar profundidade ao gradiente só na Hero, é a primeira impressão */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.035] mix-blend-overlay"
+        aria-hidden="true"
+      >
+        <filter id="hero-grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.9"
+            numOctaves="2"
+            stitchTiles="stitch"
+          />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#hero-grain)" />
+      </svg>
+
+      {/* orb silver: deriva sozinho + reage sutilmente à posição do cursor */}
+      <div
+        className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[500px]"
+        style={{
+          transform:
+            "translate(-50%, -50%) translate(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -24px))",
+        }}
+      >
+        <div className="h-full w-full rounded-full bg-silver/8 blur-[120px] motion-safe:animate-[aurora-drift-a_16s_ease-in-out_infinite]" />
+      </div>
+
+      {/* orb warm: mesma lógica, direção e velocidade diferentes pra sensação orgânica */}
+      <div
+        className="pointer-events-none absolute right-0 bottom-0 h-[300px] w-[300px]"
+        style={{
+          transform:
+            "translate(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 18px))",
+        }}
+      >
+        <div className="h-full w-full rounded-full bg-warm/5 blur-[100px] motion-safe:animate-[aurora-drift-b_18s_ease-in-out_infinite]" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
         <motion.div
@@ -24,7 +83,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-silver/25 bg-silver/5 px-4 py-2 text-sm text-silver">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-silver/25 bg-silver/5 px-4 py-2 text-sm text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md">
             <Sparkles size={14} className="text-warm" />
             <span>{siteConfig.location}</span>
           </div>
@@ -65,7 +124,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{
                   opacity: 1,
-                  y: [0, -4, 0],
+                  y: shouldReduceMotion ? 0 : [0, -4, 0],
                   scale: 1,
                 }}
                 transition={{
@@ -73,7 +132,7 @@ export function Hero() {
                   scale: { duration: 0.4, delay: 0.6 + i * 0.08 },
                   y: {
                     duration: 3.5,
-                    repeat: Infinity,
+                    repeat: shouldReduceMotion ? 0 : Infinity,
                     repeatType: "reverse",
                     ease: "easeInOut",
                     delay: 1.0 + i * 0.2,
@@ -82,10 +141,9 @@ export function Hero() {
                 whileHover={{
                   scale: 1.05,
                   y: -2,
-                  borderColor: "rgba(255, 255, 255, 0.25)",
                   transition: { duration: 0.2, ease: "easeOut" },
                 }}
-                className="glass cursor-default rounded-lg border border-silver/10 px-3.5 py-1.5 font-mono text-xs text-white/50 transition-colors hover:text-white/80 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)]"
+                className="cursor-default rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono text-xs text-white/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-300 hover:border-warm/30 hover:text-warm"
               >
                 {tech}
               </motion.span>
@@ -100,10 +158,12 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 p-2 text-white/30 transition-colors hover:text-warm sm:bottom-8"
+        className="group absolute bottom-4 left-1/2 z-20 -translate-x-1/2 sm:bottom-8"
         aria-label="Rolar para baixo"
       >
-        <ArrowDown size={24} className="animate-bounce" />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 backdrop-blur-md transition-all duration-300 group-hover:border-warm/30 group-hover:text-warm">
+          <ArrowDown size={18} className="animate-bounce" />
+        </span>
       </motion.a>
     </section>
   );
