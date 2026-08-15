@@ -2,18 +2,21 @@
 
 import { useRef, type MouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, Code2, ExternalLink, Github } from "lucide-react";
 import { projects, type Project } from "@/data/portfolio";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-// Padrão de spans do bento grid, repetido em ciclo caso a lista de projetos cresça.
+// Padrão de spans do bento grid, só variação de LARGURA, sem row-span.
+// (row-span forçava os cards vizinhos a esticar além do próprio conteúdo,
+// criando o vazio dentro do card; sem ele, cada linha se ajusta ao seu
+// próprio conteúdo.)
 const BENTO_SPANS = [
-  "lg:col-span-2 lg:row-span-2",
-  "lg:col-span-1 lg:row-span-1",
-  "lg:col-span-1 lg:row-span-1",
-  "lg:col-span-1 lg:row-span-1",
-  "lg:col-span-2 lg:row-span-1",
+  "lg:col-span-2",
+  "lg:col-span-1",
+  "lg:col-span-1",
+  "lg:col-span-1",
+  "lg:col-span-2",
 ];
 
 export function Projects() {
@@ -54,7 +57,6 @@ function ProjectBentoCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Tilt 3D sutil que segue o cursor, com física de mola para suavizar o retorno.
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
   const rotateX = useSpring(useTransform(mouseY, [0, 1], [7, -7]), {
@@ -86,6 +88,9 @@ function ProjectBentoCard({
   }
 
   const isLarge = index === 0;
+  // Status derivado dos dados que já existem: se tem link de deploy, está no ar;
+  // senão, é um projeto de código aberto sem demo pública.
+  const isLive = Boolean(project.link);
 
   return (
     <motion.div
@@ -106,7 +111,7 @@ function ProjectBentoCard({
       >
         <GlassCard
           className={`group relative h-full overflow-hidden !p-0 ${
-            isLarge ? "min-h-[280px]" : "min-h-[220px]"
+            isLarge ? "min-h-[240px]" : "min-h-[200px]"
           }`}
         >
           {/* spotlight que segue o cursor, na paleta warm */}
@@ -118,8 +123,14 @@ function ProjectBentoCard({
             }}
           />
 
-          {/* véu sutil silver -> warm no hover, mesma linguagem do Navbar/Footer */}
+          {/* véu sutil silver warm no hover, mesma linguagem do Navbar/Footer */}
           <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-silver/5 to-warm/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+          {/* watermark decorativo preenche o respiro dos cards menores sem virar ruído visual */}
+          <Code2
+            strokeWidth={1}
+            className="pointer-events-none absolute -right-4 -bottom-4 h-28 w-28 text-white/[0.03] transition-all duration-500 group-hover:scale-110 group-hover:text-warm/[0.07]"
+          />
 
           <div
             className={`relative flex h-full flex-col p-6 sm:p-8 ${
@@ -169,13 +180,32 @@ function ProjectBentoCard({
             </h3>
             <p
               className={`leading-relaxed text-white/55 ${
-                isLarge ? "mb-6 text-base" : "mb-5 text-sm"
+                isLarge ? "text-base" : "text-sm"
               }`}
             >
               {project.description}
             </p>
 
-            <div className="mt-auto flex flex-wrap gap-2">
+            {/* badge de status conteúdo real, derivado do dado, não decoração vazia */}
+            <div className="mt-4 flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <span
+                  className={`absolute inline-flex h-full w-full animate-ping rounded-full ${
+                    isLive ? "bg-warm/60" : "bg-silver/40"
+                  }`}
+                />
+                <span
+                  className={`relative inline-flex h-1.5 w-1.5 rounded-full ${
+                    isLive ? "bg-warm" : "bg-silver/70"
+                  }`}
+                />
+              </span>
+              <span className="text-xs font-medium text-white/40">
+                {isLive ? "Em produção" : "Código aberto"}
+              </span>
+            </div>
+
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
               {project.tags.map((tag) => (
                 <span
                   key={tag}

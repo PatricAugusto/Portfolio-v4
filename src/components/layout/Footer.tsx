@@ -12,7 +12,12 @@ const socialLinks = [
     icon: Linkedin,
     external: true,
   },
-  { href: `mailto:${siteConfig.email}`, label: "Email", icon: Mail, external: false },
+  {
+    href: `mailto:${siteConfig.email}`,
+    label: "Email",
+    icon: Mail,
+    external: false,
+  },
 ];
 
 export function Footer() {
@@ -115,22 +120,24 @@ export function Footer() {
             </p>
 
             <div className="mt-4 flex items-center justify-center gap-3 sm:justify-start">
-              {socialLinks.map(({ href, label, icon: Icon, external }, index) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener noreferrer" : undefined}
-                  aria-label={label}
-                  className="group/icon relative animate-[footer-fade-up_0.6s_ease-out_both]"
-                  style={{ animationDelay: `${240 + index * 80}ms` }}
-                >
-                  <span className="pointer-events-none absolute inset-0 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover/icon:bg-warm/20" />
-                  <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-all duration-300 group-hover/icon:-translate-y-1 group-hover/icon:rotate-3 group-hover/icon:border-warm/30 group-hover/icon:text-warm group-active/icon:translate-y-0 group-active/icon:scale-95 group-active/icon:rotate-0">
-                    <Icon size={18} />
-                  </span>
-                </a>
-              ))}
+              {socialLinks.map(
+                ({ href, label, icon: Icon, external }, index) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    aria-label={label}
+                    className="group/icon relative animate-[footer-fade-up_0.6s_ease-out_both]"
+                    style={{ animationDelay: `${240 + index * 80}ms` }}
+                  >
+                    <span className="pointer-events-none absolute inset-0 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover/icon:bg-warm/20" />
+                    <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-all duration-300 group-hover/icon:-translate-y-1 group-hover/icon:rotate-3 group-hover/icon:border-warm/30 group-hover/icon:text-warm group-active/icon:translate-y-0 group-active/icon:scale-95 group-active/icon:rotate-0">
+                      <Icon size={18} />
+                    </span>
+                  </a>
+                ),
+              )}
             </div>
           </div>
         </div>
@@ -146,7 +153,7 @@ export function Footer() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="group/top inline-flex items-center gap-2 rounded-full border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 px-4 py-2 text-xs font-medium text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-all duration-300 hover:border-warm/40 hover:text-warm active:scale-95"
+            className="group/top inline-flex cursor-pointer items-center gap-2 rounded-full border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 px-4 py-2 text-xs font-medium text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-all duration-300 hover:border-warm/40 hover:text-warm active:scale-95"
           >
             Voltar ao topo
             <ArrowUp
