@@ -111,12 +111,22 @@ export const projects: Project[] = [
   },
   {
     id: "5",
-    title: "Hydro ZAP ",
+    title: "Hydro ZAP",
     description:
       "HYDRO+ZAP ajuda a manter o consumo diário de água e cafeína equilibrado. Registre doses com um toque, acompanhe o progresso em tempo real e revise seu histórico em um calendário, tudo salvo localmente, sem servidor.",
     tags: ["Next.js", "TypeScript", "Styled-components", "localStorage"],
     link: "https://hydro-caffeine-sag3-henna.vercel.app/",
     github: "https://github.com/PatricAugusto/Hydro-Caffeine",
+    featured: true,
+  },
+  {
+    id: "6",
+    title: "AgendaGlass ",
+    description:
+      "SaaS de agendamento (estilo Calendly) com autenticação JWT, PostgreSQL e lógica de conflito de horários.",
+    tags: ["Backend: Node.js + Express + PostgreSQL", "Frontend: React + styled-components + date-fns", "Design: Liquid Glass + paleta Solarpunk (neons) + tipografia retro gaming"],
+    link: "https://hydro-caffeine-sag3-henna.vercel.app/",
+    github: "https://agendaglass.vercel.app/login",
     featured: true,
   },
 ];
