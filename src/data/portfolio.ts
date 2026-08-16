@@ -125,7 +125,7 @@ export const projects: Project[] = [
     description:
       "SaaS de agendamento (estilo Calendly) com autenticação JWT, PostgreSQL e lógica de conflito de horários.",
     tags: ["Backend: Node.js + Express + PostgreSQL", "Frontend: React + styled-components + date-fns", "Design: Liquid Glass + paleta Solarpunk (neons) + tipografia retro gaming"],
-    link: "https://agendaglass.vercel.app/login",
+    link: "https://agendaglass.vercel.app",
     github: "https://github.com/PatricAugusto/SaaS-Solarpunk-de-agendamento",
     featured: true,
   },
