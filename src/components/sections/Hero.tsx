@@ -8,8 +8,13 @@ import { Button } from "@/components/ui/Button";
 
 const techBadges = ["Next.js", "React", "Node.js", "Express", "SQL", "IA"];
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const wordRef = useRef<HTMLSpanElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
   function handleMouseMove(event: MouseEvent<HTMLElement>) {
@@ -17,6 +22,22 @@ export function Hero() {
     const y = (event.clientY / window.innerHeight - 0.5) * 2;
     sectionRef.current?.style.setProperty("--mx", x.toFixed(3));
     sectionRef.current?.style.setProperty("--my", y.toFixed(3));
+  }
+
+  function handleHeadingMouseMove(event: MouseEvent<HTMLHeadingElement>) {
+    const bounds = wordRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+
+    const x = clamp(((event.clientX - bounds.left) / bounds.width) * 100, 0, 100);
+    const y = clamp(((event.clientY - bounds.top) / bounds.height) * 100, 0, 100);
+
+    wordRef.current?.style.setProperty("--hero-tx", `${x}%`);
+    wordRef.current?.style.setProperty("--hero-ty", `${y}%`);
+  }
+
+  function handleHeadingMouseLeave() {
+    wordRef.current?.style.setProperty("--hero-tx", "50%");
+    wordRef.current?.style.setProperty("--hero-ty", "50%");
   }
 
   return (
@@ -35,11 +56,33 @@ export function Hero() {
           0%, 100% { transform: translate(0, 0) scale(1); }
           50% { transform: translate(-24px, 18px) scale(1.05); }
         }
+
+        @property --hero-tx {
+          syntax: '<percentage>';
+          inherits: true;
+          initial-value: 50%;
+        }
+        @property --hero-ty {
+          syntax: '<percentage>';
+          inherits: true;
+          initial-value: 50%;
+        }
+        .hero-word-gradient {
+          background-image: radial-gradient(
+            140% 140% at var(--hero-tx) var(--hero-ty),
+            var(--color-warm) 0%,
+            var(--color-silver) 55%,
+            var(--color-warm) 100%
+          );
+          transition:
+            --hero-tx 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+            --hero-ty 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
       `}</style>
 
       <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" />
 
-      {/* grão sutil pra dar profundidade ao gradiente só na Hero, é a primeira impressão */}
+      {/* grão sutil pra dar profundidade ao gradiente, só na Hero, é a primeira impressão */}
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.035] mix-blend-overlay"
         aria-hidden="true"
@@ -88,9 +131,18 @@ export function Hero() {
             <span>{siteConfig.location}</span>
           </div>
 
-          <h1 className="mb-6 text-4xl leading-tight font-bold tracking-tight sm:text-6xl lg:text-7xl">
+          <h1
+            onMouseMove={handleHeadingMouseMove}
+            onMouseLeave={handleHeadingMouseLeave}
+            className="mb-6 text-4xl leading-tight font-bold tracking-tight sm:text-6xl lg:text-7xl"
+          >
             Desenvolvimento web{" "}
-            <span className="text-gradient">escalável</span>
+            <span
+              ref={wordRef}
+              className="hero-word-gradient bg-clip-text text-transparent"
+            >
+              escalável
+            </span>
             <br />
             para o futuro
           </h1>
@@ -158,12 +210,10 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="group absolute bottom-4 left-1/2 z-20 -translate-x-1/2 sm:bottom-8"
+        className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 p-2 text-white/30 transition-colors hover:text-warm sm:bottom-8"
         aria-label="Rolar para baixo"
       >
-        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/40 backdrop-blur-md transition-all duration-300 group-hover:border-warm/30 group-hover:text-warm">
-          <ArrowDown size={18} className="animate-bounce" />
-        </span>
+        <ArrowDown size={24} className="animate-bounce" />
       </motion.a>
     </section>
   );
