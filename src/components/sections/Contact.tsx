@@ -10,34 +10,40 @@ import {
   Mail,
   MapPin,
   Send,
+  Terminal,
+  Radio,
+  ArrowUpRight,
 } from "lucide-react";
 import { siteConfig } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 
 const contactLinks = [
   {
+    code: "01",
     icon: Mail,
-    label: "Email",
+    label: "Email Direct",
     value: siteConfig.email,
     href: `mailto:${siteConfig.email}`,
   },
   {
+    code: "02",
     icon: Github,
-    label: "GitHub",
+    label: "Source Code",
     value: "github.com/PatricAugusto",
     href: siteConfig.github,
   },
   {
+    code: "03",
     icon: Linkedin,
-    label: "LinkedIn",
+    label: "Network",
     value: "linkedin.com/in/PatricAugusto",
     href: siteConfig.linkedin,
   },
   {
+    code: "04",
     icon: MapPin,
-    label: "Localização",
+    label: "Location Base",
     value: siteConfig.location,
     href: undefined,
   },
@@ -66,7 +72,6 @@ export function Contact() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Usamos e.currentTarget para garantir o tipo correto do elemento do formulário
     const formData = new FormData(e.currentTarget);
     const formObject = Object.fromEntries(formData.entries());
 
@@ -83,12 +88,11 @@ export function Contact() {
 
       if (response.ok && data.success) {
         setSubmitStatus("success");
-        e.currentTarget.reset(); // Limpa o formulário de forma segura
+        e.currentTarget.reset();
       } else {
         setSubmitStatus("error");
       }
     } catch (err) {
-      // 4. Resolvendo o ESLint: registrando o erro no console ou omitindo-o se não for usar
       console.error("Erro no envio do formulário:", err);
       setSubmitStatus("error");
     } finally {
@@ -98,71 +102,99 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden py-24 sm:py-32">
-      <div className="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-warm/5 blur-[120px]" />
-      <div className="pointer-events-none absolute right-0 bottom-0 h-[300px] w-[300px] rounded-full bg-silver/5 blur-[100px]" />
+      {/* Background Grid */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <SectionHeading
-          tag="Contato"
-          title="Vamos construir algo incrível"
-          description="Estou aberto a novos projetos, parcerias e oportunidades. Entre em contato e vamos conversar sobre como posso ajudar."
-          align="center"
-        />
+        {/* Cabeçalho Editorial */}
+        <div className="mb-16 border-b border-white/10 pb-8">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs uppercase tracking-widest text-warm">
+               05 . COMUNICAÇÃO
+            </span>
+            <div className="h-px w-8 bg-warm/30" />
+          </div>
 
-        <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-5">
+          <h2 className="mt-4 text-3xl font-light tracking-tight text-white sm:text-5xl">
+            Vamos Construir <br />
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-silver to-warm">
+              O Próximo Projeto
+            </span>
+          </h2>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-12">
+          {/* Coluna Esquerda: Channels */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="space-y-4 lg:col-span-2"
+            className="space-y-3 lg:col-span-5"
           >
+            <div className="mb-2 flex items-center justify-between px-1 font-mono text-[10px] tracking-widest text-white/40 uppercase">
+              <span>CANANIS_DE_CONEXÃO</span>
+              <span className="flex items-center gap-1 text-emerald-400">
+                <Radio size={10} className="animate-pulse" /> ONLINE
+              </span>
+            </div>
+
             {contactLinks.map((link) => {
               const Icon = link.icon;
               const content = (
-                <div className="flex items-center gap-4">
-                  <span className="relative flex h-10 w-10 shrink-0 items-center justify-center">
-                    <span className="pointer-events-none absolute inset-0 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover:bg-warm/25" />
-                    <span className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-colors duration-300 group-hover:border-warm/40">
-                      <Icon
-                        size={18}
-                        className="text-silver transition-colors duration-300 group-hover:text-warm"
+                <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-black/40 p-4 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 hover:bg-white/[0.03]">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3.5">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-silver transition-colors duration-300 group-hover:border-warm/40 group-hover:text-warm">
+                        <Icon size={18} />
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] text-warm">
+                            [{link.code}]
+                          </span>
+                          <p className="font-mono text-xs text-white/50">
+                            {link.label}
+                          </p>
+                        </div>
+                        <p className="text-sm font-medium text-white/90 group-hover:text-white">
+                          {link.value}
+                        </p>
+                      </div>
+                    </div>
+
+                    {link.href && (
+                      <ArrowUpRight
+                        size={16}
+                        className="text-white/30 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-warm"
                       />
-                    </span>
-                  </span>
-                  <div>
-                    <p className="text-xs text-white/40">{link.label}</p>
-                    <p className="text-sm font-medium">{link.value}</p>
+                    )}
                   </div>
                 </div>
               );
 
-              return (
-                <GlassCard
+              return link.href ? (
+                <a
                   key={link.label}
-                  className="group !p-4 transition-colors duration-300 hover:border-silver/30"
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    link.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className="block"
                 >
-                  {link.href ? (
-                    <a
-                      href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={
-                        link.href.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      className="block"
-                    >
-                      {content}
-                    </a>
-                  ) : (
-                    content
-                  )}
-                </GlassCard>
+                  {content}
+                </a>
+              ) : (
+                <div key={link.label}>{content}</div>
               );
             })}
           </motion.div>
 
+          {/* Coluna Direita: Form Console */}
           <motion.div
             ref={formPanelRef}
             onMouseMove={handleFormMouseMove}
@@ -170,141 +202,152 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-3 [--spot-x:50%] [--spot-y:50%]"
+            className="relative rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl sm:p-8 lg:col-span-7 [--spot-x:50%] [--spot-y:50%]"
           >
-            <GlassCard className="group relative h-full overflow-hidden" glow>
-              {/* spotlight que segue o cursor, mesma técnica do Projects/About/Footer */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{
-                  background:
-                    "radial-gradient(420px circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--color-warm) 10%, transparent), transparent 70%)",
-                }}
+            {/* Spotlight */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background:
+                  "radial-gradient(420px circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--color-warm) 8%, transparent), transparent 70%)",
+              }}
+            />
+
+            {/* Form Terminal Header */}
+            <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2">
+                <Terminal size={16} className="text-warm" />
+                <span className="font-mono text-xs font-semibold tracking-wider text-white uppercase">
+                  DISPATCH_CONSOLE
+                </span>
+              </div>
+              <span className="font-mono text-[10px] text-white/30 uppercase">
+                PORT: 443 // SECURE
+              </span>
+            </div>
+
+            <form className="relative space-y-5" onSubmit={handleSubmit}>
+              {/* Anti-Spam Honeypot */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: "none" }}
               />
 
-              <form className="relative space-y-5" onSubmit={handleSubmit}>
-                {/* Anti-Spam Honeypot (Segurança ISO), Invisível para humanos */}
-                <input
-                  type="checkbox"
-                  name="botcheck"
-                  className="hidden"
-                  style={{ display: "none" }}
-                />
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="mb-2 block text-xs font-medium text-white/50"
-                    >
-                      Nome
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="Seu nome"
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-md transition-all duration-300 placeholder:text-white/30 focus:border-warm/40 focus:shadow-[0_0_20px_-6px_var(--tw-shadow-color)] focus:shadow-warm/40 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="mb-2 block text-xs font-medium text-white/50"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="seu@email.com"
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-md transition-all duration-300 placeholder:text-white/30 focus:border-warm/40 focus:shadow-[0_0_20px_-6px_var(--tw-shadow-color)] focus:shadow-warm/40 focus:outline-none"
-                    />
-                  </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block font-mono text-xs text-white/60"
+                  >
+                    IDENTIFIER [NOME]
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="Ex: Alan Turing"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
+                  />
                 </div>
                 <div>
                   <label
-                    htmlFor="message"
-                    className="mb-2 block text-xs font-medium text-white/50"
+                    htmlFor="email"
+                    className="mb-2 block font-mono text-xs text-white/60"
                   >
-                    Mensagem
+                    RETURN_ADDR [EMAIL]
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    required
-                    placeholder="Conte sobre seu projeto..."
-                    className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-md transition-all duration-300 placeholder:text-white/30 focus:border-warm/40 focus:shadow-[0_0_20px_-6px_var(--tw-shadow-color)] focus:shadow-warm/40 focus:outline-none"
-                  />
-                </div>
-
-                {/* Consentimento LGPD */}
-                <div className="flex items-start gap-3">
                   <input
-                    id="privacy"
-                    type="checkbox"
+                    id="email"
+                    name="email"
+                    type="email"
                     required
-                    className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-warm focus:ring-0 focus:ring-offset-0"
+                    placeholder="alan@turing.org"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
                   />
-                  <label
-                    htmlFor="privacy"
-                    className="text-xs leading-tight text-white/50"
-                  >
-                    Concordo em fornecer estes dados para receber o retorno do
-                    meu contato, em conformidade com as diretrizes de
-                    privacidade.
-                  </label>
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full sm:w-auto"
-                    disabled={isSubmitting}
-                  >
-                    <Send
-                      size={16}
-                      className={isSubmitting ? "animate-pulse" : ""}
-                    />
-                    {isSubmitting ? "Enviando..." : "Enviar mensagem"}
-                  </Button>
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block font-mono text-xs text-white/60"
+                >
+                  PAYLOAD [MENSAGEM]
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  required
+                  placeholder="Descreva o escopo do projeto ou ideia..."
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
+                />
+              </div>
 
-                  <AnimatePresence mode="wait">
-                    {submitStatus === "success" && (
-                      <motion.p
-                        key="success"
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.25 }}
-                        className="flex items-center gap-2 text-sm font-medium text-emerald-400"
-                      >
-                        <CheckCircle2 size={16} />
-                        Mensagem enviada com sucesso!
-                      </motion.p>
-                    )}
-                    {submitStatus === "error" && (
-                      <motion.p
-                        key="error"
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.25 }}
-                        className="flex items-center gap-2 text-sm font-medium text-red-400"
-                      >
-                        <AlertCircle size={16} />
-                        Falha ao enviar. Tente novamente mais tarde.
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </form>
-            </GlassCard>
+              {/* Consentimento LGPD */}
+              <div className="flex items-start gap-3">
+                <input
+                  id="privacy"
+                  type="checkbox"
+                  required
+                  className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-warm focus:ring-0 focus:ring-offset-0"
+                />
+                <label
+                  htmlFor="privacy"
+                  className="font-mono text-[11px] leading-tight text-white/40"
+                >
+                  Autorizo o processamento dos dados informados para retorno da
+                  comunicação, de acordo com as políticas de privacidade.
+                </label>
+              </div>
+
+              <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  disabled={isSubmitting}
+                >
+                  <Send
+                    size={15}
+                    className={isSubmitting ? "animate-pulse" : ""}
+                  />
+                  {isSubmitting ? "Transmitindo..." : "Transmitir Mensagem"}
+                </Button>
+
+                <AnimatePresence mode="wait">
+                  {submitStatus === "success" && (
+                    <motion.p
+                      key="success"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex items-center gap-2 font-mono text-xs font-medium text-emerald-400"
+                    >
+                      <CheckCircle2 size={16} />
+                      TRANSMISSÃO_CONCLUÍDA
+                    </motion.p>
+                  )}
+                  {submitStatus === "error" && (
+                    <motion.p
+                      key="error"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex items-center gap-2 font-mono text-xs font-medium text-red-400"
+                    >
+                      <AlertCircle size={16} />
+                      ERRO_NO_ENVIO: Tente novamente.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+            </form>
           </motion.div>
         </div>
       </div>
