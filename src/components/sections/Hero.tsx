@@ -1,21 +1,88 @@
 "use client";
 
-import { useRef, type MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, Code2, Sparkles, Terminal } from "lucide-react";
 import { siteConfig } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
 
 const techBadges = ["Next.js", "React", "Node.js", "Express", "SQL", "IA"];
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const wordRef = useRef<HTMLSpanElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // Animação de fundo via HTML5 Canvas (constelação fluida minimalista)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || shouldReduceMotion) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Criação de partículas com opacidade baixa
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: Math.random() * 1.5 + 0.5,
+    }));
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Conecta partículas próximas com linhas sutis
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [shouldReduceMotion]);
 
   function handleMouseMove(event: MouseEvent<HTMLElement>) {
     const x = (event.clientX / window.innerWidth - 0.5) * 2;
@@ -24,197 +91,146 @@ export function Hero() {
     sectionRef.current?.style.setProperty("--my", y.toFixed(3));
   }
 
-  function handleHeadingMouseMove(event: MouseEvent<HTMLHeadingElement>) {
-    const bounds = wordRef.current?.getBoundingClientRect();
-    if (!bounds) return;
-
-    const x = clamp(((event.clientX - bounds.left) / bounds.width) * 100, 0, 100);
-    const y = clamp(((event.clientY - bounds.top) / bounds.height) * 100, 0, 100);
-
-    wordRef.current?.style.setProperty("--hero-tx", `${x}%`);
-    wordRef.current?.style.setProperty("--hero-ty", `${y}%`);
-  }
-
-  function handleHeadingMouseLeave() {
-    wordRef.current?.style.setProperty("--hero-tx", "50%");
-    wordRef.current?.style.setProperty("--hero-ty", "50%");
-  }
-
   return (
     <section
       id="hero"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-20 pb-28 sm:pb-20"
+      className="relative flex min-h-screen flex-col justify-between overflow-hidden px-6 pt-28 pb-12 sm:px-12 lg:px-20"
     >
-      <style>{`
-        @keyframes aurora-drift-a {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(30px, -20px) scale(1.08); }
-        }
-        @keyframes aurora-drift-b {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-24px, 18px) scale(1.05); }
-        }
+      {/* Canvas de Fundo Fluido */}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
+      />
 
-        @property --hero-tx {
-          syntax: '<percentage>';
-          inherits: true;
-          initial-value: 50%;
-        }
-        @property --hero-ty {
-          syntax: '<percentage>';
-          inherits: true;
-          initial-value: 50%;
-        }
-        .hero-word-gradient {
-          background-image: radial-gradient(
-            140% 140% at var(--hero-tx) var(--hero-ty),
-            var(--color-warm) 0%,
-            var(--color-silver) 55%,
-            var(--color-warm) 100%
-          );
-          transition:
-            --hero-tx 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-            --hero-ty 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-      `}</style>
-
-      <div className="grid-bg pointer-events-none absolute inset-0 opacity-50" />
-
-      {/* grão sutil pra dar profundidade ao gradiente, só na Hero, é a primeira impressão */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.035] mix-blend-overlay"
-        aria-hidden="true"
-      >
-        <filter id="hero-grain">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.9"
-            numOctaves="2"
-            stitchTiles="stitch"
-          />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#hero-grain)" />
-      </svg>
-
-      {/* orb silver: deriva sozinho + reage sutilmente à posição do cursor */}
-      <div
-        className="pointer-events-none absolute top-1/4 left-1/2 h-[500px] w-[500px]"
-        style={{
-          transform:
-            "translate(-50%, -50%) translate(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -24px))",
-        }}
-      >
-        <div className="h-full w-full rounded-full bg-silver/8 blur-[120px] motion-safe:animate-[aurora-drift-a_16s_ease-in-out_infinite]" />
+      {/* Marca d'água Desconstruída de Código */}
+      <div className="pointer-events-none absolute -right-20 top-1/4 select-none font-mono text-[18vw] font-bold leading-none tracking-tighter text-white/[0.015]">
+        &lt;DEV/&gt;
       </div>
 
-      {/* orb warm: mesma lógica, direção e velocidade diferentes pra sensação orgânica */}
-      <div
-        className="pointer-events-none absolute right-0 bottom-0 h-[300px] w-[300px]"
-        style={{
-          transform:
-            "translate(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 18px))",
-        }}
-      >
-        <div className="h-full w-full rounded-full bg-warm/5 blur-[100px] motion-safe:animate-[aurora-drift-b_18s_ease-in-out_infinite]" />
+      {/* Top Bar Desconstruída (Status e Badge Minimalista) */}
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-6">
+        <div className="flex items-center gap-3">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-warm/60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-warm" />
+          </span>
+          <span className="font-mono text-xs uppercase tracking-widest text-white/50">
+            {siteConfig.location}
+          </span>
+        </div>
+
+        <div className="hidden font-mono text-xs tracking-wider text-white/30 sm:block">
+          01 // PORTFOLIO EDITORIAL
+        </div>
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
+      {/* Conteúdo Principal (Layout Assimétrico e Desconstruído) */}
+      <div className="relative z-10 my-auto grid gap-12 py-12 lg:grid-cols-12 lg:items-center">
+        {/* Bloco de Título e Chamada Principal (8 colunas) */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="lg:col-span-8"
+        >
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-warm/20 bg-warm/5 px-3.5 py-1.5 font-mono text-xs text-warm backdrop-blur-md">
+            <Terminal size={14} />
+            <span>{siteConfig.role}</span>
+          </div>
+
+          <h1 className="mb-8 text-4xl font-light tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Sistemas em <br />
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-silver to-warm">
+              Escala & Alta Performance
+            </span>
+          </h1>
+
+          <p className="max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
+            Especializado em arquiteturas web robustas, unindo{" "}
+            <strong className="font-medium text-white">Next.js</strong>,{" "}
+            <strong className="font-medium text-white">React</strong> e{" "}
+            <strong className="font-medium text-white">Node.js</strong> a soluções modernas integradas com{" "}
+            <strong className="font-medium text-warm">Inteligência Artificial</strong>.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Button href="#projects" size="lg">
+              Ver Projetos
+            </Button>
+            <Button href="#contact" variant="outline" size="lg">
+              Entrar em Contato
+            </Button>
+          </div>
+        </motion.div>
+
+        {/* Card Flutuante de Código (4 colunas na lateral - Visual Tech Desconstruído) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="relative lg:col-span-4"
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-silver/25 bg-silver/5 px-4 py-2 text-sm text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md">
-            <Sparkles size={14} className="text-warm" />
-            <span>{siteConfig.location}</span>
-          </div>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl transition-all duration-500 hover:border-warm/40">
+            <div className="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
+              <div className="flex gap-1.5">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-500/40" />
+                <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/40" />
+                <div className="h-2.5 w-2.5 rounded-full bg-green-500/40" />
+              </div>
+              <Code2 size={14} className="text-white/30" />
+            </div>
 
-          <h1
-            onMouseMove={handleHeadingMouseMove}
-            onMouseLeave={handleHeadingMouseLeave}
-            className="mb-6 text-4xl leading-tight font-bold tracking-tight sm:text-6xl lg:text-7xl"
-          >
-            Desenvolvimento web{" "}
-            <span
-              ref={wordRef}
-              className="hero-word-gradient bg-clip-text text-transparent"
-            >
-              escalável
-            </span>
-            <br />
-            para o futuro
-          </h1>
+            <pre className="font-mono text-xs leading-relaxed text-white/70">
+              <code>
+                <span className="text-warm">const</span> stack = &#123;
+                <br />
+                {"  "}core: [<span className="text-silver">Next.js</span>, <span className="text-silver">React</span>],
+                <br />
+                {"  "}backend: [<span className="text-silver">Node</span>, <span className="text-silver">Express</span>],
+                <br />
+                {"  "}database: <span className="text-silver">SQL</span>,
+                <br />
+                {"  "}aiReady: <span className="text-warm">true</span>
+                <br />
+                &#125;;
+              </code>
+            </pre>
 
-          <p className="mx-auto mb-4 max-w-2xl text-lg text-white/60 sm:text-xl">
-            {siteConfig.role} especializado em arquiteturas robustas com{" "}
-            <span className="text-white/80">Next.js</span>,{" "}
-            <span className="text-white/80">React</span>,{" "}
-            <span className="text-white/80">Node.js</span> e integração com{" "}
-            <span className="text-white/80">IA</span>.
-          </p>
-
-          <p className="mx-auto mb-10 max-w-xl font-mono text-sm tracking-wide text-white/40">
-            {siteConfig.tagline}
-          </p>
-
-          <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button href="#projects" size="lg">
-              Ver projetos
-            </Button>
-            <Button href="#contact" variant="outline" size="lg">
-              Entrar em contato
-            </Button>
-          </div>
-
-          {/* Badges Animadas */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {techBadges.map((tech, i) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{
-                  opacity: 1,
-                  y: shouldReduceMotion ? 0 : [0, -4, 0],
-                  scale: 1,
-                }}
-                transition={{
-                  opacity: { duration: 0.4, delay: 0.6 + i * 0.08 },
-                  scale: { duration: 0.4, delay: 0.6 + i * 0.08 },
-                  y: {
-                    duration: 3.5,
-                    repeat: shouldReduceMotion ? 0 : Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                    delay: 1.0 + i * 0.2,
-                  },
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                  transition: { duration: 0.2, ease: "easeOut" },
-                }}
-                className="cursor-default rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono text-xs text-white/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-300 hover:border-warm/30 hover:text-warm"
-              >
-                {tech}
-              </motion.span>
-            ))}
+            {/* Badges Minimalistas no Rodapé do Card */}
+            <div className="mt-6 flex flex-wrap gap-1.5 border-t border-white/5 pt-4">
+              {techBadges.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded border border-white/5 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-white/40"
+                >
+                  #{tech}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Seta posicionada em relação à Section inteira com espaçamento seguro no mobile */}
-      <motion.a
-        href="#about"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 p-2 text-white/30 transition-colors hover:text-warm sm:bottom-8"
-        aria-label="Rolar para baixo"
-      >
-        <ArrowDown size={24} className="animate-bounce" />
-      </motion.a>
+      {/* Rodapé da Hero (Navegação Desconstruída) */}
+      <div className="relative z-10 flex items-center justify-between border-t border-white/5 pt-6">
+        <p className="font-mono text-xs tracking-wide text-white/30">
+          {siteConfig.tagline}
+        </p>
+
+        <motion.a
+          href="#projects"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
+          className="flex items-center gap-2 font-mono text-xs text-white/40 transition-colors hover:text-warm"
+          aria-label="Rolar para baixo"
+        >
+          <span>SCROLL</span>
+          <ArrowDown size={14} className="animate-bounce" />
+        </motion.a>
+      </div>
     </section>
   );
 }
