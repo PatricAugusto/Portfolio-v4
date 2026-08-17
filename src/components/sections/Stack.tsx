@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code } from "lucide-react";
+import { Code, Terminal, Cpu } from "lucide-react";
 import {
   SiNextdotjs,
   SiReact,
@@ -24,16 +24,11 @@ import {
 } from "react-icons/si";
 import { TbApi, TbSql } from "react-icons/tb";
 
-import {
-  categoryLabels,
-  skills,
-  type Skill,
-} from "@/data/portfolio";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { categoryLabels, skills, type Skill } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-// Logo SVG Inline oficial da OpenAI para evitar falha de exportação no react-icons
-function OpenAiIcon({ size = 22, className }: { size?: number; className?: string }) {
+// Logo SVG Inline oficial da OpenAI
+function OpenAiIcon({ size = 18, className }: { size?: number; className?: string }) {
   return (
     <svg
       width={size}
@@ -71,70 +66,80 @@ const iconMap: Record<string, React.ElementType> = {
   docker: SiDocker,
 };
 
-function SkillIcon({ icon }: { icon: string }) {
-  const Icon = iconMap[icon] ?? Code;
-  return <Icon size={22} className="text-blue-soft" />;
-}
+const categoryMap: Record<string, { code: string; colSpan: string }> = {
+  frontend: { code: "01", colSpan: "lg:col-span-7" },
+  backend: { code: "02", colSpan: "lg:col-span-5" },
+  database: { code: "03", colSpan: "lg:col-span-6" },
+  ai: { code: "04", colSpan: "lg:col-span-6" },
+  tools: { code: "05", colSpan: "lg:col-span-12" },
+};
 
-const categories = [
-  "frontend",
-  "backend",
-  "database",
-  "ai",
-  "tools",
-] as const;
+function SkillBadge({ skill }: { skill: Skill }) {
+  const Icon = iconMap[skill.icon] ?? Code;
+  const isCore = ["nextjs", "nodejs", "openai", "typescript"].includes(skill.icon);
 
-function FloatingSkillCard({
-  skill,
-  index,
-}: {
-  skill: Skill;
-  index: number;
-}) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24, scale: 0.92 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay: index * 0.05, duration: 0.45, ease: "easeOut" }}
-      whileHover={{ y: -6, scale: 1.04 }}
+    <div
       className={cn(
-        "stack-float-card glass glass-hover group relative flex w-33 flex-col items-center gap-3 rounded-2xl px-4 py-5 sm:w-37",
+        "group relative flex items-center gap-2.5 rounded-xl border px-3.5 py-2.5 transition-all duration-300 backdrop-blur-md",
+        isCore
+          ? "border-warm/30 bg-warm/5 hover:border-warm hover:bg-warm/10"
+          : "border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.06]"
       )}
-      style={{ animationDelay: `${index * 0.35}s` }}
     >
-      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-blue-soft/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-primary/25 bg-linear-to-br from-blue-primary/15 to-cyan-glow/5 transition-colors duration-300 group-hover:border-blue-soft/40 group-hover:from-blue-primary/25">
-        <SkillIcon icon={skill.icon} />
-      </div>
-
-      <span className="text-center text-sm font-medium text-white/75 transition-colors duration-300 group-hover:text-white">
+      <Icon
+        size={18}
+        className={cn(
+          "transition-colors duration-300",
+          isCore ? "text-warm" : "text-white/60 group-hover:text-white"
+        )}
+      />
+      <span
+        className={cn(
+          "font-mono text-xs font-medium tracking-tight transition-colors duration-300",
+          isCore ? "text-white" : "text-white/70 group-hover:text-white"
+        )}
+      >
         {skill.name}
       </span>
-    </motion.div>
+      {isCore && (
+        <span className="h-1 w-1 rounded-full bg-warm animate-pulse" />
+      )}
+    </div>
   );
 }
 
 export function Stack() {
+  const categories = ["frontend", "backend", "database", "ai", "tools"] as const;
+
   return (
     <section id="stack" className="relative overflow-hidden py-24 sm:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-blue-primary/3 to-transparent" />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 h-105 w-105 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-primary/5 blur-[100px]" />
+      {/* Background Grid */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-      <div className="relative mx-auto max-w-5xl px-6">
-        <SectionHeading
-          tag="Stack"
-          title="Tecnologias que domino"
-          description="Um ecossistema completo para construir aplicações web de ponta a ponta, do frontend reativo ao backend robusto, bancos de dados e inteligência artificial."
-          align="center"
-        />
+      <div className="relative mx-auto max-w-6xl px-6">
+        {/* Cabeçalho Editorial */}
+        <div className="mb-16 border-b border-white/10 pb-8">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs uppercase tracking-widest text-warm">
+               03 . ECOSSISTEMA
+            </span>
+            <div className="h-px w-8 bg-warm/30" />
+          </div>
 
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-14">
+          <h2 className="mt-4 text-3xl font-light tracking-tight text-white sm:text-5xl">
+            Stack & Ferramentas de <br />
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-silver to-warm">
+              Alta Performance
+            </span>
+          </h2>
+        </div>
+
+        {/* Bento Grid Desconstruído de Tecnologias */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
           {categories.map((category, catIndex) => {
-            const categorySkills = skills.filter(
-              (s: Skill) => s.category === category,
-            );
+            const categorySkills = skills.filter((s: Skill) => s.category === category);
+            const config = categoryMap[category];
 
             return (
               <motion.div
@@ -143,19 +148,28 @@ export function Stack() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ delay: catIndex * 0.08, duration: 0.5 }}
-                className="flex w-full flex-col items-center"
+                className={cn(
+                  "relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/20",
+                  config.colSpan
+                )}
               >
-                <h3 className="mb-6 text-center font-mono text-xs tracking-[0.2em] text-blue-soft/70 uppercase">
-                  {categoryLabels[category]}
-                </h3>
+                {/* Header de Telemetria do Módulo */}
+                <div className="mb-6 flex items-center justify-between border-b border-white/5 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-warm">{config.code} --</span>
+                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-white/80">
+                      {categoryLabels[category]}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[9px] tracking-widest text-white/30 uppercase">
+                    SYS_MODULE
+                  </span>
+                </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-                  {categorySkills.map((skill, index) => (
-                    <FloatingSkillCard
-                      key={skill.name}
-                      skill={skill}
-                      index={catIndex * 4 + index}
-                    />
+                {/* Badge Grid de Tecnologias */}
+                <div className="flex flex-wrap gap-2.5">
+                  {categorySkills.map((skill) => (
+                    <SkillBadge key={skill.name} skill={skill} />
                   ))}
                 </div>
               </motion.div>
@@ -163,20 +177,25 @@ export function Stack() {
           })}
         </div>
 
+        {/* Terminal Telemetry Strip Footer */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="mx-auto mt-16 max-w-2xl"
+          className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-3 font-mono text-xs text-white/50 backdrop-blur-md"
         >
-          <div className="stack-float-card glass glow-blue rounded-2xl px-6 py-4 text-center">
-            <p className="font-mono text-sm text-white/50">
-              <span className="text-cyan-glow">→</span> Frontend 3D & Reativo{" "}
-              <span className="text-white/30">·</span> APIs RESTful & Realtime{" "}
-              <span className="text-white/30">·</span> SGBDs relacionais{" "}
-              <span className="text-white/30">·</span> Pipelines de IA
-            </p>
+          <div className="flex items-center gap-2">
+            <Terminal size={14} className="text-warm" />
+            <span>ARQUITETURA: Monolítica & Microsserviços</span>
+          </div>
+
+          <div className="flex items-center gap-4 text-white/30">
+            <span className="flex items-center gap-1">
+              <Cpu size={12} className="text-emerald-500" /> REALTIME_OK
+            </span>
+            <span>--</span>
+            <span>IA_PIPELINES_ACTIVE</span>
           </div>
         </motion.div>
       </div>
