@@ -2,25 +2,14 @@
 
 import { useRef, type MouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, Code2, ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, Terminal } from "lucide-react";
 import { projects, type Project } from "@/data/portfolio";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-// Padrão de spans do bento grid, só variação de LARGURA, sem row-span.
-// (row-span forçava os cards vizinhos a esticar além do próprio conteúdo,
-// criando o vazio dentro do card; sem ele, cada linha se ajusta ao seu
-// próprio conteúdo.)
-const BENTO_SPANS = [
-  "lg:col-span-2",
-  "lg:col-span-1",
-  "lg:col-span-1",
-  "lg:col-span-1",
-  "lg:col-span-2",
-];
-
 export function Projects() {
   const featured = projects.filter((p) => p.featured);
+  const [heroProject, ...otherProjects] = featured;
 
   return (
     <section id="projects" className="relative py-24 sm:py-32">
@@ -31,55 +20,128 @@ export function Projects() {
           description="Projetos que demonstram minha capacidade de construir aplicações completas, do design system ao deploy em produção."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-flow-dense lg:auto-rows-[minmax(200px,auto)] lg:grid-cols-3">
-          {featured.map((project, index) => (
-            <ProjectBentoCard
-              key={project.id}
-              project={project}
-              index={index}
-              span={BENTO_SPANS[index % BENTO_SPANS.length]}
-            />
-          ))}
+        {/* Layout Desconstruído */}
+        <div className="space-y-12">
+          {/* Card Hero Desconstruído (Destaque Principal) */}
+          {heroProject && <HeroProjectCard project={heroProject} />}
+
+          {/* Grid Desconstruído Assimétrico (Alternado via CSS) */}
+          <div className="grid gap-8 md:grid-cols-2 lg:gap-10">
+            {otherProjects.map((project, index) => (
+              <DeconstructedCard
+                key={project.id}
+                project={project}
+                index={index}
+                isOffset={index % 2 !== 0} // Desloca colunas ímpares para criar ritmo visual
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function ProjectBentoCard({
+{/* Feature Highlight / Hero Card */}
+function HeroProjectCard({ project }: { project: Project }) {
+  const isLive = Boolean(project.link);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.05] via-transparent to-white/[0.02] p-8 backdrop-blur-xl sm:p-12"
+    >
+      {/* Detalhes de Background de Alta Tecnologia */}
+      <div className="pointer-events-none absolute -right-12 -top-12 h-64 w-64 rounded-full bg-warm/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+      <span className="absolute left-0 top-0 text-[120px] font-bold leading-none tracking-tighter text-white/[0.02] select-none">
+        01
+      </span>
+
+      <div className="relative z-10 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+        <div className="max-w-2xl">
+          <div className="mb-4 flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-warm/30 bg-warm/10 px-3 py-1 font-mono text-xs font-medium text-warm">
+              <Terminal size={12} /> Projeto em Destaque
+            </span>
+            <div className="flex items-center gap-1.5">
+              <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-warm" : "bg-silver/60"}`} />
+              <span className="text-xs text-white/40">{isLive ? "Em produção" : "Código aberto"}</span>
+            </div>
+          </div>
+
+          <h3 className="mb-4 text-3xl font-light tracking-tight text-white sm:text-4xl">
+            {project.title}
+          </h3>
+          <p className="text-base leading-relaxed text-white/60">
+            {project.description}
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-lg border border-white/5 bg-white/[0.03] px-3 py-1 font-mono text-xs text-white/50"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Links de Ação Desconstruídos */}
+        <div className="flex items-center gap-4 border-t border-white/10 pt-6 lg:border-t-0 lg:pt-0">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white/70 transition-all duration-300 hover:border-warm/50 hover:bg-warm/10 hover:text-warm"
+              aria-label="GitHub"
+            >
+              <Github size={20} />
+            </a>
+          )}
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 items-center gap-2 rounded-2xl bg-white px-6 font-medium text-black transition-all duration-300 hover:bg-warm hover:text-black"
+            >
+              <span>Acessar</span>
+              <ArrowUpRight size={18} />
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+{/* Card Secundário Desconstruído com Elevação Offset */}
+function DeconstructedCard({
   project,
   index,
-  span,
+  isOffset,
 }: {
   project: Project;
   index: number;
-  span: string;
+  isOffset: boolean;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(mouseY, [0, 1], [7, -7]), {
-    stiffness: 200,
-    damping: 20,
-  });
-  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-7, 7]), {
-    stiffness: 200,
-    damping: 20,
-  });
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [4, -4]), { stiffness: 150, damping: 20 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-4, 4]), { stiffness: 150, damping: 20 });
 
   function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
     const bounds = cardRef.current?.getBoundingClientRect();
     if (!bounds) return;
-
-    const x = (event.clientX - bounds.left) / bounds.width;
-    const y = (event.clientY - bounds.top) / bounds.height;
-
-    mouseX.set(x);
-    mouseY.set(y);
-
-    cardRef.current?.style.setProperty("--spot-x", `${x * 100}%`);
-    cardRef.current?.style.setProperty("--spot-y", `${y * 100}%`);
+    mouseX.set((event.clientX - bounds.left) / bounds.width);
+    mouseY.set((event.clientY - bounds.top) / bounds.height);
   }
 
   function handleMouseLeave() {
@@ -87,72 +149,37 @@ function ProjectBentoCard({
     mouseY.set(0.5);
   }
 
-  const isLarge = index === 0;
-  // Status derivado dos dados que já existem: se tem link de deploy, está no ar;
-  // senão, é um projeto de código aberto sem demo pública.
   const isLive = Boolean(project.link);
 
   return (
     <motion.div
-      className={span}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
+      className={`h-full ${isOffset ? "lg:translate-y-8" : ""}`} // Aplica o desnível vertical entre colunas
     >
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        whileHover={{ y: -4 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        style={{ rotateX, rotateY, transformPerspective: 800 }}
-        className="h-full [--spot-x:50%] [--spot-y:50%]"
+        style={{ rotateX, rotateY, transformPerspective: 1000 }}
+        className="h-full"
       >
-        <GlassCard
-          className={`group relative h-full overflow-hidden !p-0 ${
-            isLarge ? "min-h-[240px]" : "min-h-[200px]"
-          }`}
-        >
-          {/* spotlight que segue o cursor, na paleta warm */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                "radial-gradient(360px circle at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--color-warm) 16%, transparent), transparent 70%)",
-            }}
-          />
-
-          {/* véu sutil silver warm no hover, mesma linguagem do Navbar/Footer */}
-          <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-silver/5 to-warm/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-          {/* watermark decorativo preenche o respiro dos cards menores sem virar ruído visual */}
-          <Code2
-            strokeWidth={1}
-            className="pointer-events-none absolute -right-4 -bottom-4 h-28 w-28 text-white/[0.03] transition-all duration-500 group-hover:scale-110 group-hover:text-warm/[0.07]"
-          />
-
-          <div
-            className={`relative flex h-full flex-col p-6 sm:p-8 ${
-              isLarge ? "sm:p-10" : ""
-            }`}
-          >
-            <div className="mb-4 flex items-start justify-between">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-colors duration-300 group-hover:border-warm/40">
-                <ArrowUpRight
-                  size={18}
-                  className="text-silver transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-warm"
-                />
+        <GlassCard className="group relative flex h-full flex-col justify-between overflow-hidden border-t-2 border-t-white/10 !p-7 transition-all duration-500 hover:border-t-warm/60">
+          <div>
+            {/* Top Bar: Número do projeto e links */}
+            <div className="mb-6 flex items-center justify-between">
+              <span className="font-mono text-xs text-white/30">
+                0{index + 2} 
               </span>
-
               <div className="flex gap-2">
                 {project.github && (
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/40 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-warm/30 hover:text-warm active:translate-y-0 active:scale-95"
-                    aria-label={`GitHub - ${project.title}`}
+                    className="text-white/40 transition-colors hover:text-warm"
                   >
                     <Github size={16} />
                   </a>
@@ -162,8 +189,7 @@ function ProjectBentoCard({
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/40 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-warm/30 hover:text-warm active:translate-y-0 active:scale-95"
-                    aria-label={`Demo - ${project.title}`}
+                    className="text-white/40 transition-colors hover:text-warm"
                   >
                     <ExternalLink size={16} />
                   </a>
@@ -171,47 +197,27 @@ function ProjectBentoCard({
               </div>
             </div>
 
-            <h3
-              className={`mb-3 font-semibold transition-colors group-hover:text-warm ${
-                isLarge ? "text-2xl" : "text-xl"
-              }`}
-            >
+            <h3 className="mb-3 text-xl font-medium tracking-wide text-white transition-colors group-hover:text-warm">
               {project.title}
             </h3>
-            <p
-              className={`leading-relaxed text-white/55 ${
-                isLarge ? "text-base" : "text-sm"
-              }`}
-            >
+            <p className="text-sm leading-relaxed text-white/55">
               {project.description}
             </p>
+          </div>
 
-            {/* badge de status conteúdo real, derivado do dado, não decoração vazia */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className="relative flex h-1.5 w-1.5">
-                <span
-                  className={`absolute inline-flex h-full w-full animate-ping rounded-full ${
-                    isLive ? "bg-warm/60" : "bg-silver/40"
-                  }`}
-                />
-                <span
-                  className={`relative inline-flex h-1.5 w-1.5 rounded-full ${
-                    isLive ? "bg-warm" : "bg-silver/70"
-                  }`}
-                />
-              </span>
-              <span className="text-xs font-medium text-white/40">
-                {isLive ? "Em produção" : "Código aberto"}
+          {/* Bottom Bar: Status + Tag pill desconstruído */}
+          <div className="mt-8 border-t border-white/5 pt-4">
+            <div className="mb-3 flex items-center gap-2">
+              <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-warm" : "bg-silver/40"}`} />
+              <span className="font-mono text-[11px] uppercase tracking-wider text-white/30">
+                {isLive ? "Live" : "Open Source"}
               </span>
             </div>
 
-            <div className="mt-auto flex flex-wrap gap-2 pt-5">
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
               {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-white/50"
-                >
-                  {tag}
+                <span key={tag} className="font-mono text-[11px] text-white/40">
+                  #{tag}
                 </span>
               ))}
             </div>
