@@ -24,9 +24,9 @@ import {
   SiGooglegemini,
   SiAnthropic,
   SiRender,
-  SiVisualstudiocode,
   SiNpm,
 } from "react-icons/si";
+import { VscCode } from "react-icons/vsc";
 import { TbApi, TbSql, TbBrain } from "react-icons/tb";
 
 import { categoryLabels, skills, type Skill } from "@/data/portfolio";
@@ -73,7 +73,7 @@ const iconMap: Record<string, React.ElementType> = {
   github: SiGithub,
   docker: SiDocker,
   render: SiRender,
-  vscode: SiVisualstudiocode,
+  vscode: VscCode,
   npm: SiNpm,
 };
 
@@ -135,7 +135,7 @@ export function Stack() {
         <div className="mb-16 border-b border-white/10 pb-8">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs uppercase tracking-widest text-warm">
-              03 . ECOSSISTEMA
+               03 . ECOSSISTEMA
             </span>
             <div className="h-px w-8 bg-warm/30" />
           </div>
