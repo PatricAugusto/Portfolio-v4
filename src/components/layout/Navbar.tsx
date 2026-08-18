@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Terminal, Radio } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -27,90 +27,120 @@ export function Navbar() {
       className={cn(
         "fixed top-0 right-0 left-0 z-50 transition-all duration-500",
         scrolled
-          ? "border-b border-white/10 bg-black/40 py-3 shadow-lg shadow-black/30 backdrop-blur-2xl backdrop-saturate-150"
-          : "py-5"
+          ? "border-b border-white/10 bg-black/60 py-3 backdrop-blur-xl shadow-2xl shadow-black/80"
+          : "py-5 bg-transparent"
       )}
     >
+      {/* Top Telemetry Line */}
       <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent transition-opacity duration-500",
+          "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-warm/40 to-transparent transition-opacity duration-500",
           scrolled ? "opacity-100" : "opacity-0"
         )}
       />
 
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
+        {/* Brand / Identifier */}
         <a
           href="#hero"
-          className="group relative flex items-center gap-2"
+          className="group relative flex items-center gap-3"
           onClick={() => setMobileOpen(false)}
         >
-          <span className="relative flex h-9 w-9 items-center justify-center">
-            <span className="pointer-events-none absolute inset-0 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover:bg-warm/25" />
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-silver/30 bg-gradient-to-b from-white/10 to-white/5 font-mono text-sm font-bold text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-md transition-colors duration-300 group-hover:border-warm/40 group-hover:text-warm">
-              {siteConfig.name.charAt(0)}
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-black/60 font-mono text-xs font-bold text-warm backdrop-blur-md transition-colors duration-300 group-hover:border-warm/50 group-hover:bg-warm/10">
+            <span className="relative z-10">{siteConfig.name.charAt(0)}</span>
+            <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 bg-warm animate-pulse" />
+          </div>
+
+          <div className="hidden flex-col sm:flex">
+            <span className="font-mono text-xs font-semibold tracking-wider text-white uppercase group-hover:text-warm transition-colors">
+              {siteConfig.name}
             </span>
-          </span>
-          <span className="hidden font-semibold tracking-tight sm:block">
-            {siteConfig.name}
-          </span>
+            <span className="font-mono text-[9px] tracking-widest text-white/30 uppercase">
+              SYS_NAV // ONLINE
+            </span>
+          </div>
         </a>
 
-        <ul className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl md:flex">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="relative block rounded-full border border-transparent px-4 py-2 text-sm text-white/60 transition-all duration-300 hover:border-white/10 hover:bg-white/10 hover:text-white"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <a href="#contact" className="group/cta relative hidden md:inline-flex">
-          <span className="pointer-events-none absolute -inset-1 rounded-xl bg-warm/0 blur-md transition-colors duration-500 group-hover/cta:bg-warm/20" />
-          <span className="relative overflow-hidden rounded-xl border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 px-5 py-2.5 text-sm font-medium text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] backdrop-blur-md transition-all duration-300 group-hover/cta:border-warm/40 group-hover/cta:text-warm">
-            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full" />
-            <span className="relative">Fale comigo</span>
-          </span>
-        </a>
-
-        <button
-          type="button"
-          className="rounded-lg border border-transparent p-2 text-white/70 transition-all duration-300 hover:border-white/10 hover:bg-white/10 hover:text-white md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
-
-      {mobileOpen && (
-        <div className="relative border-t border-white/10 bg-black/50 backdrop-blur-2xl backdrop-saturate-150 md:hidden">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          <ul className="flex flex-col gap-1 px-6 py-4">
-            {navLinks.map((link) => (
+        {/* Desktop Central Navigation Dock */}
+        <div className="hidden items-center rounded-xl border border-white/10 bg-black/40 p-1.5 backdrop-blur-xl md:flex">
+          <ul className="flex items-center gap-1 font-mono text-xs">
+            {navLinks.map((link, idx) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="block rounded-lg border border-transparent px-4 py-3 text-sm text-white/70 transition-all duration-300 hover:border-white/10 hover:bg-white/10 hover:text-white"
-                  onClick={() => setMobileOpen(false)}
+                  className="group relative block rounded-lg px-3.5 py-1.5 text-white/60 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
                 >
-                  {link.label}
+                  <span className="mr-1.5 text-[10px] text-warm/70 group-hover:text-warm">
+                    0{idx + 1}.
+                  </span>
+                  <span>{link.label}</span>
                 </a>
               </li>
             ))}
-            <li className="pt-2">
-              <a
-                href="#contact"
-                className="block rounded-xl border border-silver/25 bg-gradient-to-b from-white/10 to-white/5 px-4 py-3 text-center text-sm font-medium text-silver shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-md"
-                onClick={() => setMobileOpen(false)}
-              >
-                Fale comigo
-              </a>
-            </li>
           </ul>
+        </div>
+
+        {/* CTA Terminal Action Button */}
+        <a
+          href="#contact"
+          className="group relative hidden font-mono text-xs md:inline-flex"
+        >
+          <span className="relative flex items-center gap-2 overflow-hidden rounded-lg border border-warm/30 bg-warm/10 px-4 py-2 font-medium text-warm transition-all duration-300 hover:border-warm hover:bg-warm hover:text-black shadow-[0_0_15px_-3px_rgba(255,180,100,0.15)]">
+            <Terminal size={13} className="transition-transform group-hover:rotate-12" />
+            <span>EXECUTE // CONTACT</span>
+          </span>
+        </a>
+
+        {/* Mobile Toggle Button */}
+        <button
+          type="button"
+          className="rounded-lg border border-white/10 bg-black/40 p-2 text-white/70 transition-all duration-300 hover:border-warm/40 hover:text-warm md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </nav>
+
+      {/* Mobile Terminal Drawer */}
+      {mobileOpen && (
+        <div className="relative border-b border-white/10 bg-black/90 backdrop-blur-2xl md:hidden">
+          <div className="px-6 py-6 font-mono">
+            <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-2 text-[10px] text-white/40 uppercase tracking-widest">
+              <span>SYSTEM_MENU</span>
+              <span className="flex items-center gap-1 text-emerald-400">
+                <Radio size={10} className="animate-pulse" /> CONNECTED
+              </span>
+            </div>
+
+            <ul className="flex flex-col gap-2">
+              {navLinks.map((link, idx) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition-all hover:border-warm/40 hover:bg-white/[0.05] hover:text-white"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="text-xs text-warm">0{idx + 1}.</span>
+                      {link.label}
+                    </span>
+                    <span className="text-[10px] text-white/30"> NAV</span>
+                  </a>
+                </li>
+              ))}
+              <li className="pt-2">
+                <a
+                  href="#contact"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-warm/40 bg-warm/10 px-4 py-3 text-center text-sm font-semibold text-warm"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <Terminal size={14} />
+                  EXECUTE // CONTACT
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       )}
     </header>
