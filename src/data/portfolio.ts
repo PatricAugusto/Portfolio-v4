@@ -63,11 +63,17 @@ export const skills: Skill[] = [
   // AI
   { name: "OpenAI", category: "ai", icon: "openai" },
   { name: "LangChain", category: "ai", icon: "langchain" },
+  { name: "Google Gemini", icon: "gemini", category: "ai" },
+  { name: "Claude AI", icon: "claude", category: "ai" },
+  { name: "Responsible AI", icon: "responsibleai", category: "ai" },
 
   // Tools & DevOps
   { name: "Git", category: "tools", icon: "git" },
   { name: "GitHub", category: "tools", icon: "github" },
   { name: "Docker", category: "tools", icon: "docker" },
+  { name: "Render", icon: "render", category: "tools" },
+  { name: "VS Code", icon: "vscode", category: "tools" },
+  { name: "npm", icon: "npm", category: "tools" },
 ];
 
 export const projects: Project[] = [

@@ -21,8 +21,13 @@ import {
   SiGit,
   SiGithub,
   SiDocker,
+  SiGooglegemini,
+  SiAnthropic,
+  SiRender,
+  SiVisualstudiocode,
+  SiNpm,
 } from "react-icons/si";
-import { TbApi, TbSql } from "react-icons/tb";
+import { TbApi, TbSql, TbBrain } from "react-icons/tb";
 
 import { categoryLabels, skills, type Skill } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
@@ -60,10 +65,16 @@ const iconMap: Record<string, React.ElementType> = {
   prisma: SiPrisma,
   sql: TbSql,
   openai: OpenAiIcon,
+  gemini: SiGooglegemini,
+  claude: SiAnthropic,
+  responsibleai: TbBrain,
   langchain: SiLangchain,
   git: SiGit,
   github: SiGithub,
   docker: SiDocker,
+  render: SiRender,
+  vscode: SiVisualstudiocode,
+  npm: SiNpm,
 };
 
 const categoryMap: Record<string, { code: string; colSpan: string }> = {
@@ -76,7 +87,9 @@ const categoryMap: Record<string, { code: string; colSpan: string }> = {
 
 function SkillBadge({ skill }: { skill: Skill }) {
   const Icon = iconMap[skill.icon] ?? Code;
-  const isCore = ["nextjs", "nodejs", "openai", "typescript"].includes(skill.icon);
+  const isCore = ["nextjs", "nodejs", "openai", "gemini", "typescript", "render"].includes(
+    skill.icon
+  );
 
   return (
     <div
@@ -122,7 +135,7 @@ export function Stack() {
         <div className="mb-16 border-b border-white/10 pb-8">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs uppercase tracking-widest text-warm">
-               03 . ECOSSISTEMA
+              03 . ECOSSISTEMA
             </span>
             <div className="h-px w-8 bg-warm/30" />
           </div>
