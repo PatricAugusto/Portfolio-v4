@@ -135,6 +135,24 @@ export const projects: Project[] = [
     github: "https://github.com/PatricAugusto/SaaS-Solarpunk-de-agendamento",
     featured: true,
   },
+  {
+    id: "7",
+    title: "Freelance / OS 🛠️",
+    description:
+      "Sistema robusto de gestão de tempo e faturamento para freelancers (MEI). A aplicação permite o rastreamento de horas em tempo real, gestão de projetos e análise financeira automatizada com precisão decimal.",
+    tags: ["Next.js 14+", "Styled Components", "Lucide React", "Axios", "Node.js", "Express", "Knex.js", "SQLite", "Cors"],
+    github: "https://github.com/PatricAugusto/Sistema-de-Gestao-de-Freelancer",
+    featured: true,
+  },
+  {
+    id: "8",
+    title: "🚗 Lava Jato App",
+    description:
+      "Sistema de controle e gestão para lava jatos de carros e motos — controle de entrada/saída de veículos, atendimentos, itens de serviço, despesas e dashboard de faturamento.",
+    tags: ["Node.js + TypeScript", "Express", "Prisma ORM (v7)", "PostgreSQL", "@prisma/adapter-pg", "Zod"],
+    github: "https://github.com/PatricAugusto/Sistema-de-controle-para-lava-jatos",
+    featured: true,
+  },
 ];
 
 export const aboutStats = [
