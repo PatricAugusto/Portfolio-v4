@@ -85,7 +85,7 @@ export function Navbar() {
           href="#contact"
           className="group relative hidden font-mono text-xs md:inline-flex"
         >
-          <span className="relative flex items-center gap-2 overflow-hidden rounded-lg border border-warm/30 bg-warm/10 px-4 py-2 font-medium text-warm transition-all duration-300 hover:border-warm hover:bg-warm hover:text-black shadow-[0_0_15px_-3px_rgba(255,180,100,0.15)]">
+          <span className="relative flex items-center gap-2 overflow-hidden rounded-lg border border-warm/30 bg-warm/10 px-4 py-2 font-medium text-warm transition-all duration-300 hover:border-warm hover:bg-warm hover:text-black shadow-[0_0_15px_-3px_rgba(243,243,243,0.15)]">
             <Terminal size={13} className="transition-transform group-hover:rotate-12" />
             <span>EXECUTE // CONTACT</span>
           </span>
