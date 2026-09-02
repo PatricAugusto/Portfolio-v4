@@ -105,6 +105,10 @@
     background-size: 64px 64px;
   }
 
+  .skill-active-pulse {
+    animation: skill-active-pulse 1.8s ease-in-out infinite;
+  }
+
   .profile-fluid-mask {
     mask-image: linear-gradient(
       to bottom,
@@ -146,5 +150,24 @@
 
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes skill-active-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    box-shadow: 0 0 0 0 rgba(243, 243, 243, 0.35);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 5px rgba(243, 243, 243, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-active-pulse {
+    animation: none;
   }
 }

@@ -97,7 +97,7 @@ function SkillBadge({ skill }: { skill: Skill }) {
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 420, damping: 24, mass: 0.6 }}
       className={cn(
-        "group relative flex items-center gap-2.5 rounded-xl border px-3.5 py-2.5 backdrop-blur-md transition-colors duration-300",
+        "group relative flex cursor-pointer items-center gap-2.5 rounded-xl border px-3.5 py-2.5 backdrop-blur-md transition-colors duration-300",
         isCore
           ? "border-warm/30 bg-warm/5 hover:border-warm hover:bg-warm/10 hover:shadow-[0_8px_24px_rgba(243,243,243,0.1)]"
           : "border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.06] hover:shadow-[0_8px_20px_rgba(208,208,210,0.06)]"
@@ -119,7 +119,7 @@ function SkillBadge({ skill }: { skill: Skill }) {
         {skill.name}
       </span>
       {isCore && (
-        <span className="h-1 w-1 rounded-full bg-warm animate-pulse" />
+        <span className="skill-active-pulse h-1 w-1 rounded-full bg-warm group-hover:[animation-play-state:paused]" />
       )}
     </motion.div>
   );
