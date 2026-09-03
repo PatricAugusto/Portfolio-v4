@@ -20,7 +20,7 @@ export function Button({
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-slate to-silver text-void glow-blue hover:from-silver hover:to-warm hover:text-white hover:shadow-[0_0_30px_rgba(210,166,142,0.25)]",
+      "bg-warm text-void glow-blue hover:bg-white hover:text-void hover:shadow-[0_0_30px_rgba(243,243,243,0.25)]",
     ghost:
       "glass glass-hover text-white/80 hover:text-white",
     outline:

@@ -169,7 +169,7 @@ export function About() {
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 sm:col-span-5"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                  <span className="font-mono text-[10px] tracking-widest text-white/40 uppercase">
+                  <span className="font-mono text-[10px] tracking-widest text-white/50 uppercase">
                      METRIC_01
                   </span>
                   <span className="h-1.5 w-1.5 rounded-full bg-warm animate-pulse" />
@@ -194,14 +194,14 @@ export function About() {
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl transition-all duration-300 hover:border-silver/40 sm:col-span-3"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                  <span className="font-mono text-[10px] tracking-widest text-white/40 uppercase">
+                  <span className="font-mono text-[10px] tracking-widest text-white/50 uppercase">
                      METRIC_02
                   </span>
                 </div>
                 <div className="mt-4 font-mono text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   200<span className="text-warm">+</span>
                 </div>
-                <p className="mt-1 font-mono text-xs text-white/40 uppercase">
+                <p className="mt-1 font-mono text-xs text-white/50 uppercase">
                   Projetos
                 </p>
               </motion.div>
@@ -254,11 +254,11 @@ export function About() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
-                  <span className="text-white/40">DISPONIBILIDADE:</span>
+                  <span className="text-white/50">DISPONIBILIDADE:</span>
                   <span className="font-semibold text-white">Remoto / Worldwide</span>
                 </div>
 
-                <div className="hidden items-center gap-4 text-white/30 sm:flex">
+                <div className="hidden items-center gap-4 text-white/50 sm:flex">
                   <span>LOC: BRASIL</span>
                   <span>--</span>
                   <span>TZ: UTC-3</span>
@@ -350,7 +350,7 @@ function PillarCard({
 
         <div className="mb-6 flex items-center justify-between border-b border-white/5 pb-3">
           <span className="font-mono text-xs text-warm">{pillar.code} --</span>
-          <Icon size={18} className="text-white/40 transition-colors group-hover:text-warm" />
+          <Icon size={18} className="text-white/50 transition-colors group-hover:text-warm" />
         </div>
 
         <h3 className="mb-2 text-lg font-medium text-white transition-colors group-hover:text-warm">

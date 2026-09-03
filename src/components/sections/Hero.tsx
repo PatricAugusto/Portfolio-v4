@@ -121,7 +121,7 @@ export function Hero() {
           </span>
         </div>
 
-        <div className="hidden font-mono text-xs tracking-wider text-white/30 sm:block">
+        <div className="hidden font-mono text-xs tracking-wider text-white/50 sm:block">
           01 // PORTFOLIO EDITORIAL
         </div>
       </div>
@@ -179,7 +179,7 @@ export function Hero() {
                 <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/40" />
                 <div className="h-2.5 w-2.5 rounded-full bg-green-500/40" />
               </div>
-              <Code2 size={14} className="text-white/30" />
+              <Code2 size={14} className="text-white/50" />
             </div>
 
             <pre className="font-mono text-xs leading-relaxed text-white/70">
@@ -203,7 +203,7 @@ export function Hero() {
               {techBadges.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded border border-white/5 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-white/40"
+                  className="rounded border border-white/5 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-white/50"
                 >
                   #{tech}
                 </span>
@@ -215,7 +215,7 @@ export function Hero() {
 
       {/* Rodapé da Hero (Navegação Desconstruída) */}
       <div className="relative z-10 flex items-center justify-between border-t border-white/5 pt-6">
-        <p className="font-mono text-xs tracking-wide text-white/30">
+        <p className="font-mono text-xs tracking-wide text-white/50">
           {siteConfig.tagline}
         </p>
 
@@ -224,7 +224,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.6 }}
-          className="flex items-center gap-2 font-mono text-xs text-white/40 transition-colors hover:text-warm"
+          className="flex items-center gap-2 font-mono text-xs text-white/50 transition-colors hover:text-warm"
           aria-label="Rolar para baixo"
         >
           <span>SCROLL</span>

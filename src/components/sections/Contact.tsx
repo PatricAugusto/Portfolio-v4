@@ -132,7 +132,7 @@ export function Contact() {
             transition={{ duration: 0.5 }}
             className="space-y-3 lg:col-span-5"
           >
-            <div className="mb-2 flex items-center justify-between px-1 font-mono text-[10px] tracking-widest text-white/40 uppercase">
+            <div className="mb-2 flex items-center justify-between px-1 font-mono text-[10px] tracking-widest text-white/50 uppercase">
               <span>CANANIS_DE_CONEXÃO</span>
               <span className="flex items-center gap-1 text-emerald-400">
                 <Radio size={10} className="animate-pulse" /> ONLINE
@@ -154,7 +154,7 @@ export function Contact() {
                           <span className="font-mono text-[10px] text-warm">
                             [{link.code}]
                           </span>
-                          <p className="font-mono text-xs text-white/50">
+                          <p className="font-mono text-xs text-white/60">
                             {link.label}
                           </p>
                         </div>
@@ -167,7 +167,7 @@ export function Contact() {
                     {link.href && (
                       <ArrowUpRight
                         size={16}
-                        className="text-white/30 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-warm"
+                        className="text-white/50 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-warm"
                       />
                     )}
                   </div>
@@ -221,7 +221,7 @@ export function Contact() {
                   DISPATCH_CONSOLE
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-white/30 uppercase">
+              <span className="font-mono text-[10px] text-white/50 uppercase">
                 PORT: 443 // SECURE
               </span>
             </div>
@@ -249,7 +249,7 @@ export function Contact() {
                     type="text"
                     required
                     placeholder="Ex: Alan Turing"
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/50 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -265,7 +265,7 @@ export function Contact() {
                     type="email"
                     required
                     placeholder="alan@turing.org"
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/50 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
                   />
                 </div>
               </div>
@@ -283,7 +283,7 @@ export function Contact() {
                   rows={4}
                   required
                   placeholder="Descreva o escopo do projeto ou ideia..."
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/20 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white transition-all duration-300 placeholder:text-white/50 focus:border-warm/50 focus:bg-white/[0.06] focus:outline-none"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export function Contact() {
                 />
                 <label
                   htmlFor="privacy"
-                  className="font-mono text-[11px] leading-tight text-white/40"
+                  className="font-mono text-[11px] leading-tight text-white/60"
                 >
                   Autorizo o processamento dos dados informados para retorno da
                   comunicação, de acordo com as políticas de privacidade.

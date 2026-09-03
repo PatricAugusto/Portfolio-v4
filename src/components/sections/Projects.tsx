@@ -67,7 +67,7 @@ function HeroProjectCard({ project }: { project: Project }) {
             </span>
             <div className="flex items-center gap-1.5">
               <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-warm" : "bg-silver/60"}`} />
-              <span className="text-xs text-white/40">{isLive ? "Em produção" : "Código aberto"}</span>
+              <span className="text-xs text-white/50">{isLive ? "Em produção" : "Código aberto"}</span>
             </div>
           </div>
 
@@ -170,7 +170,7 @@ function DeconstructedCard({
           <div>
             {/* Top Bar: Número do projeto e links */}
             <div className="mb-6 flex items-center justify-between">
-              <span className="font-mono text-xs text-white/30">
+              <span className="font-mono text-xs text-white/50">
                 0{index + 2} 
               </span>
               <div className="flex gap-2">
@@ -179,7 +179,7 @@ function DeconstructedCard({
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/40 transition-colors hover:text-warm"
+                    className="text-white/50 transition-colors hover:text-warm"
                   >
                     <Github size={16} />
                   </a>
@@ -189,7 +189,7 @@ function DeconstructedCard({
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/40 transition-colors hover:text-warm"
+                    className="text-white/50 transition-colors hover:text-warm"
                   >
                     <ExternalLink size={16} />
                   </a>
@@ -209,14 +209,14 @@ function DeconstructedCard({
           <div className="mt-8 border-t border-white/5 pt-4">
             <div className="mb-3 flex items-center gap-2">
               <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-warm" : "bg-silver/40"}`} />
-              <span className="font-mono text-[11px] uppercase tracking-wider text-white/30">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-white/50">
                 {isLive ? "Live" : "Open Source"}
               </span>
             </div>
 
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {project.tags.map((tag) => (
-                <span key={tag} className="font-mono text-[11px] text-white/40">
+                <span key={tag} className="font-mono text-[11px] text-white/50">
                   #{tag}
                 </span>
               ))}

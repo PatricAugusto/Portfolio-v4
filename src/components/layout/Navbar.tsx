@@ -55,7 +55,7 @@ export function Navbar() {
             <span className="font-mono text-xs font-semibold tracking-wider text-white uppercase group-hover:text-warm transition-colors">
               {siteConfig.name}
             </span>
-            <span className="font-mono text-[9px] tracking-widest text-white/30 uppercase">
+            <span className="font-mono text-[9px] tracking-widest text-white/50 uppercase">
               SYS_NAV // ONLINE
             </span>
           </div>
@@ -106,7 +106,7 @@ export function Navbar() {
       {mobileOpen && (
         <div className="relative border-b border-white/10 bg-black/90 backdrop-blur-2xl md:hidden">
           <div className="px-6 py-6 font-mono">
-            <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-2 text-[10px] text-white/40 uppercase tracking-widest">
+            <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-2 text-[10px] text-white/50 uppercase tracking-widest">
               <span>SYSTEM_MENU</span>
               <span className="flex items-center gap-1 text-emerald-400">
                 <Radio size={10} className="animate-pulse" /> CONNECTED
@@ -125,7 +125,7 @@ export function Navbar() {
                       <span className="text-xs text-warm">0{idx + 1}.</span>
                       {link.label}
                     </span>
-                    <span className="text-[10px] text-white/30"> NAV</span>
+                    <span className="text-[10px] text-white/50"> NAV</span>
                   </a>
                 </li>
               ))}

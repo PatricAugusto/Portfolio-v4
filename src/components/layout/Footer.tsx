@@ -77,7 +77,7 @@ export function Footer() {
         />
 
         {/* Console Termination Header */}
-        <div className="relative mb-8 flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs text-white/40">
+        <div className="relative mb-8 flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs text-white/50">
           <div className="flex items-center gap-2">
             <Terminal size={14} className="text-warm" />
             <span className="font-semibold tracking-wider text-white uppercase">
@@ -97,7 +97,7 @@ export function Footer() {
               {siteConfig.name}
             </p>
             <p className="mt-1 font-mono text-xs text-warm">{siteConfig.role}</p>
-            <p className="mt-3 font-mono text-xs leading-relaxed text-white/40">
+            <p className="mt-3 font-mono text-xs leading-relaxed text-white/50">
               {siteConfig.tagline}
             </p>
           </div>
@@ -107,7 +107,7 @@ export function Footer() {
             className="animate-[footer-fade-up_0.6s_ease-out_both] text-left"
             style={{ animationDelay: "80ms" }}
           >
-            <p className="mb-3 font-mono text-[10px] font-semibold tracking-widest text-white/40 uppercase">
+            <p className="mb-3 font-mono text-[10px] font-semibold tracking-widest text-white/50 uppercase">
              INDEX_NAV
             </p>
             <ul className="space-y-2 font-mono text-xs">
@@ -132,7 +132,7 @@ export function Footer() {
             className="animate-[footer-fade-up_0.6s_ease-out_both] text-left"
             style={{ animationDelay: "160ms" }}
           >
-            <p className="mb-3 font-mono text-[10px] font-semibold tracking-widest text-white/40 uppercase">
+            <p className="mb-3 font-mono text-[10px] font-semibold tracking-widest text-white/50 uppercase">
                CONNECTIVITY
             </p>
             <a
@@ -141,7 +141,7 @@ export function Footer() {
             >
               {siteConfig.email}
             </a>
-            <p className="mt-1.5 flex items-center gap-1.5 font-mono text-xs text-white/40">
+            <p className="mt-1.5 flex items-center gap-1.5 font-mono text-xs text-white/50">
               <MapPin size={13} className="text-warm/80" />
               {siteConfig.location}
             </p>
@@ -173,7 +173,7 @@ export function Footer() {
           className="relative mt-10 flex flex-col items-center gap-4 border-t border-white/10 pt-6 animate-[footer-fade-up_0.6s_ease-out_both] sm:flex-row sm:justify-between"
           style={{ animationDelay: "320ms" }}
         >
-          <p className="font-mono text-[11px] text-white/40">
+          <p className="font-mono text-[11px] text-white/50">
             © {year} {siteConfig.name} · BUILD_STACK: [NEXT.JS / REACT / STYLED-COMPONENTS]
           </p>
 
