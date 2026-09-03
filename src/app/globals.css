@@ -137,10 +137,6 @@
     background-size: 64px 64px;
   }
 
-  .skill-active-pulse {
-    animation: skill-active-pulse 1.8s ease-in-out infinite;
-  }
-
   .profile-fluid-mask {
     mask-image: linear-gradient(
       to bottom,
@@ -185,19 +181,6 @@
   }
 }
 
-@keyframes skill-active-pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-    box-shadow: 0 0 0 0 rgba(243, 243, 243, 0.35);
-  }
-
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 0 5px rgba(243, 243, 243, 0);
-  }
-}
-
 @keyframes background-wave-drift {
   from {
     transform: translate3d(-2%, 1%, 0) scale(1.02);
@@ -220,8 +203,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   body::before,
-  body::after,
-  .skill-active-pulse {
+  body::after {
     animation: none;
   }
 }
