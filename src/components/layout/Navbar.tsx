@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, Terminal, Radio } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -21,6 +24,29 @@ export function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const firstMenuLink = mobileMenuRef.current?.querySelector<HTMLAnchorElement>(
+      "a",
+    );
+    firstMenuLink?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
+  function closeMobileMenu() {
+    setMobileOpen(false);
+  }
 
   return (
     <header
@@ -93,18 +119,42 @@ export function Navbar() {
 
         {/* Mobile Toggle Button */}
         <button
+          ref={toggleRef}
           type="button"
-          className="rounded-lg border border-white/10 bg-black/40 p-2 text-white/70 transition-all duration-300 hover:border-warm/40 hover:text-warm md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          className="rounded-lg border border-white/10 bg-black/40 p-2 text-white/70 transition-all duration-300 hover:border-warm/40 hover:text-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm/70 md:hidden"
+          onClick={() => setMobileOpen((current) => !current)}
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
       {/* Mobile Terminal Drawer */}
-      {mobileOpen && (
-        <div className="relative border-b border-white/10 bg-black/90 backdrop-blur-2xl md:hidden">
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Fechar menu"
+              onClick={closeMobileMenu}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 top-[4.5rem] z-[-1] bg-black/50 backdrop-blur-[2px] md:hidden"
+            />
+            <motion.div
+              ref={mobileMenuRef}
+              id="mobile-navigation"
+              role="dialog"
+              aria-label="Navegação principal"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="glass-panel relative border-b border-white/15 md:hidden"
+            >
           <div className="px-6 py-6 font-mono">
             <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-2 text-[10px] text-white/50 uppercase tracking-widest">
               <span>SYSTEM_MENU</span>
@@ -119,7 +169,7 @@ export function Navbar() {
                   <a
                     href={link.href}
                     className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition-all hover:border-warm/40 hover:bg-white/[0.05] hover:text-white"
-                    onClick={() => setMobileOpen(false)}
+                    onClick={closeMobileMenu}
                   >
                     <span className="flex items-center gap-2">
                       <span className="text-xs text-warm">0{idx + 1}.</span>
@@ -133,16 +183,18 @@ export function Navbar() {
                 <a
                   href="#contact"
                   className="flex items-center justify-center gap-2 rounded-xl border border-warm/40 bg-warm/10 px-4 py-3 text-center text-sm font-semibold text-warm"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   <Terminal size={14} />
                   EXECUTE // CONTACT
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
-      )}
+            </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
