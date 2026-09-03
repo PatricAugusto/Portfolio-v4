@@ -142,7 +142,7 @@ export function Contact() {
             {contactLinks.map((link) => {
               const Icon = link.icon;
               const content = (
-                <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-black/40 p-4 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 hover:bg-white/[0.03]">
+                <div className="glass-panel group relative rounded-xl border border-white/10 p-4 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 hover:bg-white/[0.03]">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3.5">
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-silver transition-colors duration-300 group-hover:border-warm/40 group-hover:text-warm">
@@ -202,7 +202,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl sm:p-8 lg:col-span-7 [--spot-x:50%] [--spot-y:50%]"
+            className="glass-panel relative rounded-2xl border border-white/10 p-6 backdrop-blur-xl sm:p-8 lg:col-span-7 [--spot-x:50%] [--spot-y:50%]"
           >
             {/* Spotlight */}
             <div

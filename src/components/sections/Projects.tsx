@@ -51,7 +51,7 @@ function HeroProjectCard({ project }: { project: Project }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.05] via-transparent to-white/[0.02] p-8 backdrop-blur-xl sm:p-12"
+      className="glass-panel group relative rounded-3xl border border-white/10 p-8 backdrop-blur-xl sm:p-12"
     >
       {/* Detalhes de Background de Alta Tecnologia */}
       <div className="pointer-events-none absolute -right-12 -top-12 h-64 w-64 rounded-full bg-warm/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />

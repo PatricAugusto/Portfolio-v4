@@ -146,7 +146,7 @@ export function Stack() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ delay: catIndex * 0.08, duration: 0.5 }}
                 className={cn(
-                  "relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/20",
+                  "glass-panel relative rounded-2xl border border-white/10 p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/25",
                   config.colSpan
                 )}
               >

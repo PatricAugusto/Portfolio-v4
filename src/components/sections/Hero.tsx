@@ -172,7 +172,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="relative lg:col-span-4"
         >
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl transition-all duration-500 hover:border-warm/40">
+          <div className="glass-panel relative rounded-2xl border border-white/10 p-6 backdrop-blur-xl transition-all duration-500 hover:border-warm/40">
             <div className="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
               <div className="flex gap-1.5">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-500/40" />

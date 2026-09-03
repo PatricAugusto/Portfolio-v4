@@ -65,7 +65,7 @@ export function Footer() {
       <div
         ref={panelRef}
         onMouseMove={handlePanelMouseMove}
-        className="group relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 shadow-2xl backdrop-blur-xl sm:p-8 [--spot-x:50%] [--spot-y:50%]"
+        className="glass-panel group relative mx-auto max-w-6xl rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8 [--spot-x:50%] [--spot-y:50%]"
       >
         {/* Spotlight Interativo */}
         <div

@@ -102,7 +102,7 @@ export function About() {
         <div className="mb-24 grid items-start gap-12 lg:grid-cols-12">
           {/* Card da Foto ajustado para cores naturais com overlay de tema */}
           <motion.div {...fadeUp} className="relative lg:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-2 backdrop-blur-xl">
+            <div className="glass-panel relative aspect-[4/5] rounded-2xl border border-white/10 p-2 backdrop-blur-xl">
               <div className="absolute top-4 left-4 z-20 font-mono text-[9px] tracking-widest text-white/60 drop-shadow">
                 POS: 27.10° S / 52.61° W
               </div>
@@ -166,7 +166,7 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 sm:col-span-5"
+                className="glass-panel group relative rounded-2xl border border-white/10 p-5 backdrop-blur-xl transition-all duration-300 hover:border-warm/40 sm:col-span-5"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
                   <span className="font-mono text-[10px] tracking-widest text-white/50 uppercase">
@@ -191,7 +191,7 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.08 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl transition-all duration-300 hover:border-silver/40 sm:col-span-3"
+                className="glass-panel group relative rounded-2xl border border-white/10 p-5 backdrop-blur-xl transition-all duration-300 hover:border-silver/40 sm:col-span-3"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
                   <span className="font-mono text-[10px] tracking-widest text-white/50 uppercase">
@@ -212,7 +212,7 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.16 }}
-                className="group relative overflow-hidden rounded-2xl border border-warm/20 bg-gradient-to-br from-warm/10 via-black/40 to-black/60 p-5 backdrop-blur-xl transition-all duration-300 hover:border-warm/50 sm:col-span-4"
+                className="glass-panel group relative rounded-2xl border border-warm/20 p-5 backdrop-blur-xl transition-all duration-300 hover:border-warm/50 sm:col-span-4"
               >
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
                   <span className="font-mono text-[10px] tracking-widest text-warm uppercase">
@@ -247,7 +247,7 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.24 }}
-                className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-3 font-mono text-xs backdrop-blur-md sm:col-span-12"
+                className="glass-panel flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/5 px-5 py-3 font-mono text-xs backdrop-blur-md sm:col-span-12"
               >
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
@@ -338,7 +338,7 @@ function PillarCard({
           rotateY: springRotateY,
           transformStyle: "preserve-3d",
         }}
-        className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl transition-colors duration-300 hover:border-warm/40"
+        className="glass-panel relative h-full rounded-2xl border border-white/10 p-6 backdrop-blur-xl transition-colors duration-300 hover:border-warm/40"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"

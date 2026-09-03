@@ -16,7 +16,7 @@ export function GlassCard({
   return (
     <div
       className={cn(
-        "glass rounded-2xl p-6",
+        "glass glass-panel rounded-2xl p-6",
         hover && "glass-hover",
         glow && "glow-blue",
         className,
