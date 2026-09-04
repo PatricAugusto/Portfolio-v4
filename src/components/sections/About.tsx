@@ -100,17 +100,15 @@ export function About() {
 
         {/* Bloco Perfil + Bio + Métricas Desconstruídas */}
         <div className="mb-24 grid items-start gap-12 lg:grid-cols-12">
-          {/* Card da Foto ajustado para cores naturais com overlay de tema */}
+          {/* Retrato editorial com moldura discreta */}
           <motion.div {...fadeUp} className="relative lg:col-span-5">
-            <div className="glass-panel relative aspect-[4/5] rounded-2xl border border-white/10 p-2 backdrop-blur-xl">
-              <div className="absolute top-4 left-4 z-20 font-mono text-[9px] tracking-widest text-white/60 drop-shadow">
-                POS: 27.10° S / 52.61° W
-              </div>
-              <div className="absolute top-4 right-4 z-20 font-mono text-[9px] text-warm drop-shadow">
-                [SYS_OK]
+            <div className="glass-panel relative aspect-[4/5] rounded-2xl border border-white/10 p-3 backdrop-blur-xl">
+              <div className="absolute top-6 left-6 right-6 z-20 flex items-center justify-between font-mono text-[9px] tracking-[0.2em] text-white/60">
+                <span>PORTRAIT</span>
+                <span className="h-px w-10 bg-warm/50" />
               </div>
 
-              <div className="relative h-full w-full overflow-hidden rounded-xl">
+              <div className="relative h-full w-full overflow-hidden rounded-xl border border-white/10 bg-black">
                 <Image
                   src={profileImage}
                   alt={`Foto de perfil — ${siteConfig.name}`}
@@ -119,18 +117,9 @@ export function About() {
                   sizes="(max-width: 1024px) 100vw, 420px"
                   className="scale-105 object-cover object-[center_15%] transition-transform duration-700 hover:scale-100"
                 />
-                {/* Gradient overlay sutil para harmonizar a iluminação com a UI */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-warm/10 opacity-70" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent opacity-80" />
               </div>
 
-              <div className="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between border-t border-white/15 pt-3 backdrop-blur-xs">
-                <span className="font-mono text-xs font-medium tracking-wider text-white">
-                  {siteConfig.name}
-                </span>
-                <span className="font-mono text-[10px] text-warm">
-                  FULL-STACK / AI
-                </span>
-              </div>
             </div>
           </motion.div>
 
