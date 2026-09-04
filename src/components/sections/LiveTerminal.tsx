@@ -192,7 +192,7 @@ export function LiveTerminal() {
                 spellCheck={false}
                 className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-white/40"
               />
-              <button type="submit" aria-label="Executar comando" className="text-white/50 transition-colors hover:text-warm">
+              <button type="submit" aria-label="Executar comando" className="cursor-pointer text-white/50 transition-colors hover:text-warm">
                 <ArrowDown size={15} className="-rotate-90" />
               </button>
             </form>

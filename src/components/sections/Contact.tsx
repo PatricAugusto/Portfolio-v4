@@ -184,7 +184,7 @@ export function Contact() {
                       ? "noopener noreferrer"
                       : undefined
                   }
-                  className="block"
+                  className="block cursor-pointer"
                 >
                   {content}
                 </a>
@@ -293,11 +293,11 @@ export function Contact() {
                   id="privacy"
                   type="checkbox"
                   required
-                  className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-warm focus:ring-0 focus:ring-offset-0"
+                  className="mt-1 h-4 w-4 cursor-pointer rounded border-white/20 bg-white/5 text-warm focus:ring-0 focus:ring-offset-0"
                 />
                 <label
                   htmlFor="privacy"
-                  className="font-mono text-[11px] leading-tight text-white/60"
+                  className="cursor-pointer font-mono text-[11px] leading-tight text-white/60"
                 >
                   Autorizo o processamento dos dados informados para retorno da
                   comunicação, de acordo com as políticas de privacidade.

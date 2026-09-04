@@ -69,7 +69,7 @@ export function Navbar() {
         {/* Brand / Identifier */}
         <a
           href="#hero"
-          className="group relative flex items-center gap-3"
+          className="group relative flex cursor-pointer items-center gap-3"
           onClick={() => setMobileOpen(false)}
         >
           <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-black/60 font-mono text-xs font-bold text-warm backdrop-blur-md transition-colors duration-300 group-hover:border-warm/50 group-hover:bg-warm/10">
@@ -94,7 +94,7 @@ export function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="group relative block rounded-lg px-3.5 py-1.5 text-white/60 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
+                  className="group relative block cursor-pointer rounded-lg px-3.5 py-1.5 text-white/60 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
                 >
                   <span className="mr-1.5 text-[10px] text-warm/70 group-hover:text-warm">
                     0{idx + 1}.
@@ -109,7 +109,7 @@ export function Navbar() {
         {/* CTA Terminal Action Button */}
         <a
           href="#contact"
-          className="group relative hidden font-mono text-xs md:inline-flex"
+          className="group relative hidden cursor-pointer font-mono text-xs md:inline-flex"
         >
           <span className="relative flex items-center gap-2 overflow-hidden rounded-lg border border-warm/30 bg-warm/10 px-4 py-2 font-medium text-warm transition-all duration-300 hover:border-warm hover:bg-warm hover:text-black shadow-[0_0_15px_-3px_rgba(243,243,243,0.15)]">
             <Terminal size={13} className="transition-transform group-hover:rotate-12" />
@@ -121,7 +121,7 @@ export function Navbar() {
         <button
           ref={toggleRef}
           type="button"
-          className="rounded-lg border border-white/10 bg-black/40 p-2 text-white/70 transition-all duration-300 hover:border-warm/40 hover:text-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm/70 md:hidden"
+          className="cursor-pointer rounded-lg border border-white/10 bg-black/40 p-2 text-white/70 transition-all duration-300 hover:border-warm/40 hover:text-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm/70 md:hidden"
           onClick={() => setMobileOpen((current) => !current)}
           aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileOpen}
@@ -142,7 +142,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 top-[4.5rem] z-[-1] bg-black/50 backdrop-blur-[2px] md:hidden"
+              className="fixed inset-0 top-[4.5rem] z-[-1] cursor-pointer bg-black/50 backdrop-blur-[2px] md:hidden"
             />
             <motion.div
               ref={mobileMenuRef}
@@ -168,7 +168,7 @@ export function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition-all hover:border-warm/40 hover:bg-white/[0.05] hover:text-white"
+                    className="flex cursor-pointer items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition-all hover:border-warm/40 hover:bg-white/[0.05] hover:text-white"
                     onClick={closeMobileMenu}
                   >
                     <span className="flex items-center gap-2">
@@ -182,7 +182,7 @@ export function Navbar() {
               <li className="pt-2">
                 <a
                   href="#contact"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-warm/40 bg-warm/10 px-4 py-3 text-center text-sm font-semibold text-warm"
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-warm/40 bg-warm/10 px-4 py-3 text-center text-sm font-semibold text-warm"
                   onClick={closeMobileMenu}
                 >
                   <Terminal size={14} />
