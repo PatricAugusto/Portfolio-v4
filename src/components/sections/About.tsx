@@ -136,7 +136,7 @@ export function About() {
               </div>
 
               <p className="text-lg leading-relaxed text-white/80 sm:text-xl font-light">
-                Transformo requisitos em sistemas que funcionam sob alta demanda — com{" "}
+                Transformo requisitos em sistemas que funcionam sob alta demanda, com{" "}
                 <strong className="font-medium text-white">frontend reativo</strong>,{" "}
                 <strong className="font-medium text-white">backend sólido</strong> e{" "}
                 <strong className="font-medium text-warm">IA aplicada</strong> onde realmente resolve gargalos reais.
