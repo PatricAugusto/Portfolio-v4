@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Footer } from "./layout/Footer";
 import { Navbar } from "./layout/Navbar";
@@ -15,6 +15,10 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 describe("Navbar", () => {
   it("renders desktop navigation and opens the mobile menu", async () => {
     const user = userEvent.setup();
@@ -27,7 +31,11 @@ describe("Navbar", () => {
     const toggleButton = screen.getByRole("button", { name: /abrir menu/i });
     await user.click(toggleButton);
 
-    expect(screen.getByRole("dialog", { name: /navegação principal/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: /navegação principal/i }),
+    ).toHaveAttribute("aria-modal", "true");
+    expect(toggleButton).toHaveAttribute("aria-expanded", "true");
+    expect(document.body).toHaveStyle({ overflow: "hidden" });
   });
 
   it("updates the header state on scroll", () => {
@@ -67,6 +75,21 @@ describe("Navbar", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /abrir menu/i })).toHaveAttribute("aria-expanded", "false");
     });
+    expect(toggleButton).toHaveFocus();
+    expect(document.body).not.toHaveStyle({ overflow: "hidden" });
+  });
+
+  it("closes the mobile menu when a section link is selected", async () => {
+    const user = userEvent.setup();
+    render(<Navbar />);
+
+    await user.click(screen.getByRole("button", { name: /abrir menu/i }));
+    await user.click(screen.getByRole("dialog").querySelector('a[href="#about"]')!);
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /abrir menu/i })).toHaveAttribute("aria-expanded", "false");
+    });
+    expect(document.body).not.toHaveStyle({ overflow: "hidden" });
   });
 });
 
@@ -134,12 +157,32 @@ describe("Stack", () => {
 describe("Contact", () => {
   it("keeps required security controls and form validation signals", () => {
     const { container } = render(<Contact />);
+    const name = screen.getByLabelText(/identifier \[nome\]/i);
+    const email = screen.getByLabelText(/return_addr \[email\]/i);
+    const message = screen.getByLabelText(/payload \[mensagem\]/i);
 
     expect(container.querySelector('input[name="botcheck"]')).toHaveClass("hidden");
-    expect(screen.getByLabelText(/identifier \[nome\]/i)).toBeRequired();
-    expect(screen.getByLabelText(/return_addr \[email\]/i)).toBeRequired();
-    expect(screen.getByLabelText(/payload \[mensagem\]/i)).toBeRequired();
+    expect(name).toBeRequired();
+    expect(email).toBeRequired();
+    expect(email).toHaveAttribute("type", "email");
+    expect(message).toBeRequired();
     expect(screen.getByLabelText(/autorizo o processamento dos dados/i)).toBeRequired();
+
+    const form = name.closest("form");
+    expect(form).not.toBeNull();
+    expect(form).not.toBeValid();
+    expect(email).toHaveAccessibleName(/return_addr \[email\]/i);
+  });
+
+  it("does not send invalid form data to the API", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<Contact />);
+    await user.click(screen.getByRole("button", { name: /transmitir mensagem/i }));
+
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("submits the form successfully and displays confirmation", async () => {
@@ -160,15 +203,60 @@ describe("Contact", () => {
     await user.click(screen.getByRole("button", { name: /transmitir mensagem/i }));
 
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledWith(
-        "/api/contact",
-        expect.objectContaining({
-          method: "POST",
+      expect(fetchMock).toHaveBeenCalledWith("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Patric",
+          email: "patric@email.com",
+          message: "Preciso de um site moderno",
         }),
-      );
+      });
     });
 
     expect(await screen.findByText(/transmissão_concluída/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/identifier \[nome\]/i)).toHaveValue("");
+    expect(screen.getByLabelText(/return_addr \[email\]/i)).toHaveValue("");
+    expect(screen.getByLabelText(/payload \[mensagem\]/i)).toHaveValue("");
+  });
+
+  it("shows an error and retains entered values when the API rejects the request", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      json: async () => ({ success: false }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<Contact />);
+    await user.type(screen.getByLabelText(/identifier \[nome\]/i), "Patric");
+    await user.type(screen.getByLabelText(/return_addr \[email\]/i), "patric@email.com");
+    await user.type(screen.getByLabelText(/payload \[mensagem\]/i), "Mensagem de teste");
+    await user.click(screen.getByLabelText(/autorizo o processamento dos dados/i));
+    await user.click(screen.getByRole("button", { name: /transmitir mensagem/i }));
+
+    expect(await screen.findByText(/erro_no_envio/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/identifier \[nome\]/i)).toHaveValue("Patric");
+    expect(screen.getByLabelText(/return_addr \[email\]/i)).toHaveValue("patric@email.com");
+    expect(screen.getByLabelText(/payload \[mensagem\]/i)).toHaveValue("Mensagem de teste");
+  });
+
+  it("reports network failures without clearing the entered message", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn().mockRejectedValue(new Error("Network unavailable"));
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<Contact />);
+    await user.type(screen.getByLabelText(/identifier \[nome\]/i), "Patric");
+    await user.type(screen.getByLabelText(/return_addr \[email\]/i), "patric@email.com");
+    await user.type(screen.getByLabelText(/payload \[mensagem\]/i), "Mensagem de teste");
+    await user.click(screen.getByLabelText(/autorizo o processamento dos dados/i));
+    await user.click(screen.getByRole("button", { name: /transmitir mensagem/i }));
+
+    expect(await screen.findByText(/erro_no_envio/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/payload \[mensagem\]/i)).toHaveValue("Mensagem de teste");
+    expect(consoleError).toHaveBeenCalled();
   });
 });
 

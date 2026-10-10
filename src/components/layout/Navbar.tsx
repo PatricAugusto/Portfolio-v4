@@ -148,6 +148,7 @@ export function Navbar() {
               ref={mobileMenuRef}
               id="mobile-navigation"
               role="dialog"
+              aria-modal="true"
               aria-label="Navegação principal"
               initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
