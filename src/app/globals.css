@@ -36,42 +36,9 @@
     overflow-x: hidden;
     @apply bg-void text-white antialiased;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(208, 208, 210, 0.1), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 50%, rgba(243, 243, 243, 0.06), transparent),
-      radial-gradient(ellipse 50% 30% at 0% 80%, rgba(75, 76, 81, 0.16), transparent),
-      linear-gradient(rgba(6, 6, 6, 0.84), rgba(6, 6, 6, 0.84)),
-      var(--chrome-gradient);
+      radial-gradient(ellipse 75% 40% at 50% 0%, rgba(208, 208, 210, 0.07), transparent 72%),
+      linear-gradient(180deg, #09090a 0%, #060606 42rem);
     background-size: 100% 100%;
-    background-attachment: fixed;
-  }
-
-  body::before,
-  body::after {
-    position: fixed;
-    inset: -20vh -15vw;
-    z-index: -1;
-    pointer-events: none;
-    content: "";
-    opacity: 0.38;
-    background-repeat: no-repeat;
-    background-size: 130% 100%;
-    filter: blur(0.5px);
-    transform: translate3d(0, 0, 0);
-  }
-
-  body::before {
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath d='M-80 600 C 220 430, 390 770, 700 590 S 1180 390, 1680 560' fill='none' stroke='%23d0d0d2' stroke-opacity='.16' stroke-width='2'/%3E%3Cpath d='M-100 650 C 220 480, 420 820, 730 635 S 1190 435, 1700 605' fill='none' stroke='%23f3f3f3' stroke-opacity='.09' stroke-width='1'/%3E%3Cpath d='M-80 700 C 260 510, 440 870, 760 680 S 1220 480, 1680 650' fill='none' stroke='%234b4c51' stroke-opacity='.32' stroke-width='3'/%3E%3C/svg%3E");
-    animation: background-wave-drift 22s ease-in-out infinite alternate;
-  }
-
-  body::after {
-    inset: -15vh -20vw;
-    opacity: 0.28;
-    background-size: 115% 100%;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath d='M-100 300 C 230 520, 430 120, 760 325 S 1230 535, 1700 300' fill='none' stroke='%23f3f3f3' stroke-opacity='.12' stroke-width='2'/%3E%3Cpath d='M-100 350 C 220 570, 450 170, 780 375 S 1240 585, 1700 350' fill='none' stroke='%23d0d0d2' stroke-opacity='.1' stroke-width='1'/%3E%3C/svg%3E");
-    animation: background-wave-drift-reverse 28s ease-in-out infinite alternate;
   }
 
   ::selection {
@@ -104,18 +71,11 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border-color: rgba(255, 255, 255, 0.16);
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.09) 0%,
-      rgba(255, 255, 255, 0.035) 34%,
-      rgba(0, 0, 0, 0.58) 70%,
-      rgba(255, 255, 255, 0.055) 100%
-    );
+    border-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(18, 18, 20, 0.82) 58%);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.24),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
-      0 18px 45px rgba(0, 0, 0, 0.24);
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 16px 38px rgba(0, 0, 0, 0.2);
   }
 
   .glass-panel::before {
@@ -124,36 +84,7 @@
     z-index: -1;
     pointer-events: none;
     content: "";
-    background: linear-gradient(
-      142deg,
-      transparent 0 37%,
-      rgba(255, 255, 255, 0.045) 48%,
-      transparent 64%
-    );
-    opacity: 0.9;
-  }
-
-  .glass-panel::after {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    content: "";
-    border-radius: inherit;
-    background: linear-gradient(
-      110deg,
-      transparent 0 22%,
-      rgba(255, 255, 255, 0.18) 31%,
-      transparent 39% 100%
-    );
-    opacity: 0;
-    transform: translateX(-18%);
-    transition: opacity 500ms ease, transform 700ms ease;
-  }
-
-  .glass-panel:hover::after {
-    opacity: 0.55;
-    transform: translateX(18%);
+    background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.035), transparent 55%);
   }
 
   .glass-panel > * {
@@ -239,32 +170,5 @@
 
   50% {
     transform: translateY(-10px);
-  }
-}
-
-@keyframes background-wave-drift {
-  from {
-    transform: translate3d(-2%, 1%, 0) scale(1.02);
-  }
-
-  to {
-    transform: translate3d(2%, -1%, 0) scale(1.06);
-  }
-}
-
-@keyframes background-wave-drift-reverse {
-  from {
-    transform: translate3d(2%, -1%, 0) scale(1.04);
-  }
-
-  to {
-    transform: translate3d(-2%, 1%, 0) scale(1.08);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::before,
-  body::after {
-    animation: none;
   }
 }

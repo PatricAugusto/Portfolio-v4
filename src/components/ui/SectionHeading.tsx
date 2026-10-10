@@ -16,20 +16,21 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-12 space-y-4",
+        "mb-12 space-y-3",
         align === "center" && "text-center",
       )}
     >
-      <span className="inline-block rounded-full border border-silver/25 bg-silver/5 px-4 py-1.5 font-mono text-xs tracking-widest text-silver uppercase">
+      <span className="inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-[0.18em] text-silver/75 uppercase">
+        <span aria-hidden="true" className="h-px w-5 bg-warm/70" />
         {tag}
       </span>
-      <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            "max-w-2xl text-base text-white/60 sm:text-lg",
+            "max-w-2xl text-sm leading-7 text-white/55 sm:text-base",
             align === "center" && "mx-auto",
           )}
         >

@@ -53,6 +53,10 @@ describe("SectionHeading", () => {
     expect(
       screen.getByRole("heading", { name: /construindo produtos digitais/i }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /construindo produtos digitais/i })).toHaveClass(
+      "font-semibold",
+      "tracking-tight",
+    );
     expect(
       screen.getByText(/lidamos com arquitetura, performance e ux/i),
     ).toBeInTheDocument();
