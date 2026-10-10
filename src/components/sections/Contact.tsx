@@ -72,7 +72,14 @@ export function Contact() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    const formData = new FormData(e.currentTarget);
+    const formElement = e.currentTarget ?? (e.target as HTMLFormElement | null);
+    if (!formElement) {
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData(formElement);
     const formObject = Object.fromEntries(formData.entries());
 
     try {
@@ -88,7 +95,7 @@ export function Contact() {
 
       if (response.ok && data.success) {
         setSubmitStatus("success");
-        e.currentTarget.reset();
+        formElement.reset();
       } else {
         setSubmitStatus("error");
       }
