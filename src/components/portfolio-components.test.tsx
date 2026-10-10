@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
@@ -52,6 +52,21 @@ describe("Navbar", () => {
     });
 
     expect(header).toHaveClass("border-b", "bg-black/60");
+  });
+
+  it("closes the mobile menu with the Escape key", async () => {
+    const user = userEvent.setup();
+    render(<Navbar />);
+
+    const toggleButton = screen.getByRole("button", { name: /abrir menu/i });
+    await user.click(toggleButton);
+    expect(screen.getByRole("dialog", { name: /navegação principal/i })).toBeInTheDocument();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /abrir menu/i })).toHaveAttribute("aria-expanded", "false");
+    });
   });
 });
 
@@ -117,6 +132,16 @@ describe("Stack", () => {
 });
 
 describe("Contact", () => {
+  it("keeps required security controls and form validation signals", () => {
+    const { container } = render(<Contact />);
+
+    expect(container.querySelector('input[name="botcheck"]')).toHaveClass("hidden");
+    expect(screen.getByLabelText(/identifier \[nome\]/i)).toBeRequired();
+    expect(screen.getByLabelText(/return_addr \[email\]/i)).toBeRequired();
+    expect(screen.getByLabelText(/payload \[mensagem\]/i)).toBeRequired();
+    expect(screen.getByLabelText(/autorizo o processamento dos dados/i)).toBeRequired();
+  });
+
   it("submits the form successfully and displays confirmation", async () => {
     const user = userEvent.setup();
     const fetchMock = vi.fn().mockResolvedValue({
@@ -159,5 +184,24 @@ describe("LiveTerminal", () => {
 
     expect(await screen.findByText(/lista os comandos disponíveis/i)).toBeInTheDocument();
     expect(screen.getAllByText(/help/i).length).toBeGreaterThan(0);
+  });
+
+  it("blocks unknown commands and clears the session for valid commands", async () => {
+    const user = userEvent.setup();
+
+    render(<LiveTerminal />);
+
+    const input = screen.getByLabelText(/comando do terminal/i);
+
+    await user.type(input, "rm -rf /");
+    await user.click(screen.getByRole("button", { name: /executar comando/i }));
+
+    expect(screen.getByText(/command not found: rm -rf \//i)).toBeInTheDocument();
+
+    await user.clear(input);
+    await user.type(input, "clear");
+    await user.click(screen.getByRole("button", { name: /executar comando/i }));
+
+    expect(screen.queryByText(/live-shell v1.0.0/i)).not.toBeInTheDocument();
   });
 });
