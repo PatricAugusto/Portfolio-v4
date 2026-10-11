@@ -68,7 +68,9 @@ export const skills: Skill[] = [
   { name: "Responsible AI", icon: "responsibleai", category: "ai" },
 
   // Cybersecurity
-  { name: "OWASP ZAP", category: "cyber", icon: "zap" },
+  { name: "Playwright E2E", category: "cyber", icon: "playwright" },
+  { name: "OWASP ZAP Baseline", category: "cyber", icon: "zap" },
+  { name: "OWASP ASVS", category: "cyber", icon: "asvs" },
   { name: "Burp Suite", category: "cyber", icon: "burp" },
   { name: "Nmap", category: "cyber", icon: "nmap" },
   { name: "Wireshark", category: "cyber", icon: "wireshark" },

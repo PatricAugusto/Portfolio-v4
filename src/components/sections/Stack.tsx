@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bug, Code, Cpu, Network, Radar, ScanSearch, ShieldCheck, Terminal } from "lucide-react";
+import { Bug, Code, Cpu, Network, Radar, ScanSearch, ShieldCheck, Terminal, Workflow } from "lucide-react";
 import {
   SiNextdotjs,
   SiReact,
@@ -68,7 +68,9 @@ const iconMap: Record<string, React.ElementType> = {
   gemini: SiGooglegemini,
   claude: SiAnthropic,
   responsibleai: TbBrain,
+  playwright: Workflow,
   zap: ShieldCheck,
+  asvs: ShieldCheck,
   burp: Bug,
   nmap: ScanSearch,
   wireshark: Network,
@@ -172,7 +174,7 @@ export function Stack() {
 
                 {category === "cyber" && (
                   <p className="mb-4 font-mono text-[11px] leading-relaxed text-white/50">
-                    Defesa, monitoramento e testes de segurança autorizados.
+                    E2E de autenticação, autorização e sessão; análise dinâmica (DAST) e critérios OWASP ASVS, em ambientes autorizados.
                   </p>
                 )}
 

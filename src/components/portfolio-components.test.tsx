@@ -158,8 +158,10 @@ describe("Stack", () => {
     expect(screen.getByText(/Node.js/i)).toBeInTheDocument();
     expect(screen.getByText(/OpenAI/i)).toBeInTheDocument();
     expect(screen.getByText(/Engenharia Cibernética/i)).toBeInTheDocument();
-    expect(screen.getByText(/testes de segurança autorizados/i)).toBeInTheDocument();
-    expect(screen.getByText("OWASP ZAP")).toBeInTheDocument();
+    expect(screen.getByText(/E2E de autenticação, autorização e sessão/i)).toBeInTheDocument();
+    expect(screen.getByText("Playwright E2E")).toBeInTheDocument();
+    expect(screen.getByText("OWASP ZAP Baseline")).toBeInTheDocument();
+    expect(screen.getByText("OWASP ASVS")).toBeInTheDocument();
     expect(screen.getByText("Burp Suite")).toBeInTheDocument();
     expect(screen.getByText("Wazuh")).toBeInTheDocument();
   });
@@ -294,7 +296,7 @@ describe("LiveTerminal", () => {
     await user.keyboard("{Enter}");
 
     expect(await screen.findByText(/"cyber": \[/, {}, { timeout: 5000 })).toBeInTheDocument();
-    expect(await screen.findByText(/"OWASP ZAP"/, {}, { timeout: 5000 })).toBeInTheDocument();
+    expect(await screen.findByText(/"Playwright E2E"/, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   it("blocks unknown commands and clears the session for valid commands", async () => {
