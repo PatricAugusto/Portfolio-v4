@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code, Terminal, Cpu } from "lucide-react";
+import { Bug, Code, Cpu, Network, Radar, ScanSearch, ShieldCheck, Terminal } from "lucide-react";
 import {
   SiNextdotjs,
   SiReact,
@@ -68,6 +68,12 @@ const iconMap: Record<string, React.ElementType> = {
   gemini: SiGooglegemini,
   claude: SiAnthropic,
   responsibleai: TbBrain,
+  zap: ShieldCheck,
+  burp: Bug,
+  nmap: ScanSearch,
+  wireshark: Network,
+  wazuh: ShieldCheck,
+  suricata: Radar,
   langchain: SiLangchain,
   git: SiGit,
   github: SiGithub,
@@ -82,7 +88,8 @@ const categoryMap: Record<string, { code: string; colSpan: string }> = {
   backend: { code: "02", colSpan: "lg:col-span-5" },
   database: { code: "03", colSpan: "lg:col-span-6" },
   ai: { code: "04", colSpan: "lg:col-span-6" },
-  tools: { code: "05", colSpan: "lg:col-span-12" },
+  cyber: { code: "05", colSpan: "lg:col-span-12" },
+  tools: { code: "06", colSpan: "lg:col-span-12" },
 };
 
 function SkillBadge({ skill, index }: { skill: Skill; index: number }) {
@@ -107,7 +114,7 @@ function SkillBadge({ skill, index }: { skill: Skill; index: number }) {
 }
 
 export function Stack() {
-  const categories = ["frontend", "backend", "database", "ai", "tools"] as const;
+  const categories = ["frontend", "backend", "database", "ai", "cyber", "tools"] as const;
 
   return (
     <section id="stack" className="relative overflow-hidden py-24 sm:py-32">
@@ -162,6 +169,12 @@ export function Stack() {
                     SYS_MODULE
                   </span>
                 </div>
+
+                {category === "cyber" && (
+                  <p className="mb-4 font-mono text-[11px] leading-relaxed text-white/50">
+                    Defesa, monitoramento e testes de segurança autorizados.
+                  </p>
+                )}
 
                 {/* Badge Grid de Tecnologias */}
                 <div className="flex flex-wrap gap-2.5">

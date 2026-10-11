@@ -157,6 +157,11 @@ describe("Stack", () => {
     expect(screen.getByText(/Next.js/i)).toBeInTheDocument();
     expect(screen.getByText(/Node.js/i)).toBeInTheDocument();
     expect(screen.getByText(/OpenAI/i)).toBeInTheDocument();
+    expect(screen.getByText(/Engenharia Cibernética/i)).toBeInTheDocument();
+    expect(screen.getByText(/testes de segurança autorizados/i)).toBeInTheDocument();
+    expect(screen.getByText("OWASP ZAP")).toBeInTheDocument();
+    expect(screen.getByText("Burp Suite")).toBeInTheDocument();
+    expect(screen.getByText("Wazuh")).toBeInTheDocument();
   });
 });
 
@@ -278,6 +283,18 @@ describe("LiveTerminal", () => {
 
     expect(await screen.findByText(/lista os comandos disponíveis/i)).toBeInTheDocument();
     expect(screen.getAllByText(/help/i).length).toBeGreaterThan(0);
+  });
+
+  it("includes cybersecurity tools in the stack output", async () => {
+    const user = userEvent.setup();
+
+    render(<LiveTerminal />);
+    const input = screen.getByRole("textbox");
+    await user.type(input, "fetch --stack");
+    await user.keyboard("{Enter}");
+
+    expect(await screen.findByText(/"cyber": \[/, {}, { timeout: 5000 })).toBeInTheDocument();
+    expect(await screen.findByText(/"OWASP ZAP"/, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   it("blocks unknown commands and clears the session for valid commands", async () => {

@@ -1,6 +1,6 @@
 export interface Skill {
   name: string;
-  category: "frontend" | "backend" | "database" | "ai" | "tools";
+  category: "frontend" | "backend" | "database" | "ai" | "cyber" | "tools";
   icon: string;
 }
 
@@ -66,6 +66,14 @@ export const skills: Skill[] = [
   { name: "Google Gemini", icon: "gemini", category: "ai" },
   { name: "Claude AI", icon: "claude", category: "ai" },
   { name: "Responsible AI", icon: "responsibleai", category: "ai" },
+
+  // Cybersecurity
+  { name: "OWASP ZAP", category: "cyber", icon: "zap" },
+  { name: "Burp Suite", category: "cyber", icon: "burp" },
+  { name: "Nmap", category: "cyber", icon: "nmap" },
+  { name: "Wireshark", category: "cyber", icon: "wireshark" },
+  { name: "Wazuh", category: "cyber", icon: "wazuh" },
+  { name: "Suricata", category: "cyber", icon: "suricata" },
 
   // Tools & DevOps
   { name: "Git", category: "tools", icon: "git" },
@@ -175,5 +183,6 @@ export const categoryLabels: Record<string, string> = {
   backend: "Backend & APIs",
   database: "Bancos de Dados",
   ai: "Inteligência Artificial",
+  cyber: "Engenharia Cibernética",
   tools: "Ferramentas & DevOps",
 };

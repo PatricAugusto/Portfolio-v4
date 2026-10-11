@@ -60,6 +60,7 @@ export function LiveTerminal() {
       backend: skills.filter((skill) => skill.category === "backend").map((skill) => skill.name),
       database: skills.filter((skill) => skill.category === "database").map((skill) => skill.name),
       ai: skills.filter((skill) => skill.category === "ai").map((skill) => skill.name),
+      cyber: skills.filter((skill) => skill.category === "cyber").map((skill) => skill.name),
       tools: skills.filter((skill) => skill.category === "tools").map((skill) => skill.name),
     };
     const lines = JSON.stringify(stack, null, 2).split("\n");
