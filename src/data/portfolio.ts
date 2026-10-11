@@ -156,8 +156,8 @@ export const projects: Project[] = [
 ];
 
 export const aboutStats = [
-  { label: "Anos de experiência", value: "3+" },
-  { label: "Projetos", value: "200+" },
+  { label: "Anos de experiência", value: "4+" },
+  { label: "Projetos", value: "300+" },
   { label: "Stack principal", value: "Full Stack and IA" },
   { label: "Disponibilidade", value: "Remoto" },
 ];
