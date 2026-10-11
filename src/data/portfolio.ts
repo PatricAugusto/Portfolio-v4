@@ -97,12 +97,11 @@ export const projects: Project[] = [
   },
   {
     id: "3",
-    title: "Merchandising Co. Site Institucional",
+    title: "Kendrick",
     description:
-      "Site institucional para uma empresa fictícia de merchandising personalizado, desenvolvido como projeto de portfólio (MVP). Design dark mode luxuoso: fundo escuro, cartões sólidos elevados, tipografia serifada nos títulos e dourado como cor de destaque única.",
-    tags: ["Next.js (App Router)", "TypeScript", "styled-components", "lucide-react", "Pexels"],
-    link: "https://site-merchandising.vercel.app/",
-    github: "https://github.com/PatricAugusto/Site-Merchandising",
+      "Bot de compras no Telegram",
+    tags: ["Python"],
+    github: "https://github.com/PatricAugusto/Kendrick",
     featured: true,
   },
   {
@@ -151,6 +150,15 @@ export const projects: Project[] = [
       "Sistema de controle e gestão para lava jatos de carros e motos, controle de entrada/saída de veículos, atendimentos, itens de serviço, despesas e dashboard de faturamento.",
     tags: ["Node.js + TypeScript", "Express", "Prisma ORM (v7)", "PostgreSQL", "@prisma/adapter-pg", "Zod"],
     github: "https://github.com/PatricAugusto/Sistema-de-controle-para-lava-jatos",
+    featured: true,
+  },
+  {
+    id: "9",
+    title: "Relógio Pomodoro",
+    description:
+      "Um timer Pomodoro minimalista desenvolvido com React e Vite. A aplicação oferece sessões de foco, pausa curta, controle do cronômetro e um alarme sonoro ao final da sessão.",
+    tags: ["React", "Vite", "styled-components", "JavaScript (ES modules)"],
+    github: "https://github.com/PatricAugusto/Relogio-Pomodoro",
     featured: true,
   },
 ];

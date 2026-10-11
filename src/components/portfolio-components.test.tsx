@@ -133,8 +133,8 @@ describe("About", () => {
     render(<About />);
 
     expect(screen.getByText(/construindo o digital com/i)).toBeInTheDocument();
-    expect(screen.getByText(/3\+/i)).toBeInTheDocument();
-    expect(screen.getByText("200")).toBeInTheDocument();
+    expect(screen.getByText("4+")).toBeInTheDocument();
+    expect(screen.getByText("300+")).toBeInTheDocument();
     expect(screen.getByText(/full stack/i)).toBeInTheDocument();
   });
 });

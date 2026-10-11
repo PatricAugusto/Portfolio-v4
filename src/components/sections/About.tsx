@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { Code2, Cpu, Database, Layers, Rocket, Terminal, Zap } from "lucide-react";
-import { siteConfig } from "@/data/portfolio";
+import { aboutStats, siteConfig } from "@/data/portfolio";
 import profileImage from "@/assets/profile.png";
 
 const pillars = [
@@ -165,7 +165,7 @@ export function About() {
                 </div>
                 <div className="mt-4 flex items-baseline gap-2">
                   <span className="font-mono text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                    3+
+                    {aboutStats[0].value}
                   </span>
                   <span className="font-mono text-xs text-warm">ANOS</span>
                 </div>
@@ -188,7 +188,7 @@ export function About() {
                   </span>
                 </div>
                 <div className="mt-4 font-mono text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  200<span className="text-warm">+</span>
+                  {aboutStats[1].value}
                 </div>
                 <p className="mt-1 font-mono text-xs text-white/50 uppercase">
                   Projetos
@@ -211,11 +211,8 @@ export function About() {
                     ACTIVE
                   </span>
                 </div>
-                <div className="mt-3 font-mono text-sm font-bold leading-snug text-white">
-                  Full Stack <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-warm via-white to-silver">
-                    & IA Integrada
-                  </span>
+                <div className="mt-3 font-mono text-sm font-bold leading-snug text-transparent bg-clip-text bg-gradient-to-r from-warm via-white to-silver">
+                  {aboutStats[2].value}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1">
                   <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[9px] text-white/60">
@@ -244,7 +241,7 @@ export function About() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
                   <span className="text-white/50">DISPONIBILIDADE:</span>
-                  <span className="font-semibold text-white">Remoto / Worldwide</span>
+                  <span className="font-semibold text-white">{aboutStats[3].value}</span>
                 </div>
 
                 <div className="hidden items-center gap-4 text-white/50 sm:flex">
