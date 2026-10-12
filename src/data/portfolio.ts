@@ -155,11 +155,11 @@ export const projects: Project[] = [
   },
   {
     id: "8",
-    title: "Lava Jato App",
+    title: "Zion",
     description:
-      "Sistema de controle e gestão para lava jatos de carros e motos, controle de entrada/saída de veículos, atendimentos, itens de serviço, despesas e dashboard de faturamento.",
-    tags: ["Node.js + TypeScript", "Express", "Prisma ORM (v7)", "PostgreSQL", "@prisma/adapter-pg", "Zod"],
-    github: "https://github.com/PatricAugusto/Sistema-de-controle-para-lava-jatos",
+      "O Zion começa como uma interface de terminal para explorar conceitos de consciência e segurança espacial em um ambiente demonstrativo.",
+    tags: ["JavaScript", "Security as a pillar"],
+    github: "https://github.com/PatricAugusto/Zion",
     featured: true,
   },
   {
