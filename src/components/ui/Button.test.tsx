@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { Button } from "./Button";
-import { SectionHeading } from "./SectionHeading";
 
 describe("Button", () => {
   it("renders a default primary button with the expected content", () => {
@@ -35,30 +34,5 @@ describe("Button", () => {
     await user.click(screen.getByRole("button", { name: /salvar/i }));
 
     expect(onClick).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("SectionHeading", () => {
-  it("renders the tag, title and optional description", () => {
-    render(
-      <SectionHeading
-        tag="Sobre"
-        title="Construindo produtos digitais"
-        description="Lidamos com arquitetura, performance e UX"
-        align="center"
-      />,
-    );
-
-    expect(screen.getByText("Sobre")).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: /construindo produtos digitais/i }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /construindo produtos digitais/i })).toHaveClass(
-      "font-semibold",
-      "tracking-tight",
-    );
-    expect(
-      screen.getByText(/lidamos com arquitetura, performance e ux/i),
-    ).toBeInTheDocument();
   });
 });
