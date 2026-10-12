@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { About } from "./About";
+import { About } from "@/components/sections/About";
 
 describe("About", () => {
   it("renders the editorial heading and professional highlights", () => {

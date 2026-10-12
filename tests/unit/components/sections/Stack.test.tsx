@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Stack } from "./Stack";
+import { Stack } from "@/components/sections/Stack";
 
 describe("Stack", () => {
   it("renders technology categories and representative skills", () => {

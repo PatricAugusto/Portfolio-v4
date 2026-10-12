@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { Contact } from "./Contact";
+import { Contact } from "@/components/sections/Contact";
 
 afterEach(() => {
   vi.unstubAllGlobals();

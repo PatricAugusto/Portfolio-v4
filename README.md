@@ -24,6 +24,27 @@ Single-page application com navegação por âncoras, animações fluidas e layo
 
 ---
 
+## Testes automatizados
+
+Os testes ficam separados por nível em `tests/`: `unit/` cobre componentes
+isolados, `integration/` verifica a composição da página e `e2e/` valida os
+fluxos no navegador real com Playwright. O setup compartilhado de Vitest fica
+em `tests/setup.ts`.
+
+```bash
+npm test                 # unitários + integração
+npm run test:unit        # somente unitários
+npm run test:integration # somente integração
+npm run test:e2e         # navegador (Playwright)
+npm run test:all         # suíte completa
+```
+
+Na primeira execução E2E, instale o navegador de teste com
+`npx playwright install chromium`. O workflow de CI instala o navegador
+automaticamente e executa a suíte completa em pushes e pull requests.
+
+---
+
 ## Stack tecnológica
 
 | Camada | Tecnologias |
@@ -94,6 +115,11 @@ src/
 │   └── portfolio.ts      # Dados centralizados do portfólio
 └── lib/
     └── utils.ts          # Utilitários compartilhados
+tests/
+├── unit/components/      # Testes unitários organizados por área
+├── integration/          # Testes de composição entre componentes
+├── e2e/                  # Fluxos executados no navegador com Playwright
+└── setup.ts              # Configuração compartilhada de Vitest
 ```
 
 ---

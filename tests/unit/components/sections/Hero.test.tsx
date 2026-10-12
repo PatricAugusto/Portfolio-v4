@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Hero } from "./Hero";
+import { Hero } from "@/components/sections/Hero";
 
 describe("Hero", () => {
   it("renders its introduction and primary navigation links", () => {

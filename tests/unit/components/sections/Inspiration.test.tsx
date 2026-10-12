@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Inspiration } from "./Inspiration";
+import { Inspiration } from "@/components/sections/Inspiration";
 
 describe("Inspiration", () => {
   it("thanks the teams whose work inspires new ideas", () => {

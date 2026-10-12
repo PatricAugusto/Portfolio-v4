@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { GlassCard } from "./GlassCard";
+import { GlassCard } from "@/components/ui/GlassCard";
 
 describe("GlassCard", () => {
   it("renders content with the base surface styles", () => {

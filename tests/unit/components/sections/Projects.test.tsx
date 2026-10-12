@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Projects } from "./Projects";
+import { Projects } from "@/components/sections/Projects";
 
 describe("Projects", () => {
   it("renders featured project cards and their availability", () => {

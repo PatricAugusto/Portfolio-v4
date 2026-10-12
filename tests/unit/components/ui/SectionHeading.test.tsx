@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { SectionHeading } from "./SectionHeading";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 describe("SectionHeading", () => {
   it("renders the tag, title and optional description", () => {
