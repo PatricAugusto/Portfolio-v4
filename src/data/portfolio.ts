@@ -126,12 +126,11 @@ export const projects: Project[] = [
   },
   {
     id: "5",
-    title: "Hydro ZAP",
+    title: "Aquiles",
     description:
-      "HYDRO+ZAP ajuda a manter o consumo diário de água e cafeína equilibrado. Registre doses com um toque, acompanhe o progresso em tempo real e revise seu histórico em um calendário, tudo salvo localmente, sem servidor.",
-    tags: ["Next.js", "TypeScript", "Styled-components", "localStorage"],
-    link: "https://hydro-caffeine-sag3-henna.vercel.app/",
-    github: "https://github.com/PatricAugusto/Hydro-Caffeine",
+      "Bot de registro de consumo",
+    tags: ["Typescript", "SQLite", "Prisma ORM"],
+    github: "https://github.com/PatricAugusto/Aquiles",
     featured: true,
   },
   {
