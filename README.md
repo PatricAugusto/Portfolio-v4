@@ -18,6 +18,7 @@ Single-page application com navegação por âncoras, animações fluidas e layo
 | **Hero** | Apresentação principal, badges de tecnologia e CTAs |
 | **Sobre** | Foto de perfil integrada, estatísticas e pilares de atuação |
 | **Stack** | Cards flutuantes com tecnologias organizadas por categoria |
+| **Inspirações** | Agradecimento aos times e ideias que inspiram novas possibilidades |
 | **Projetos** | Destaques com links para demo e repositório |
 | **Contato** | Formulário funcional, links sociais e consentimento LGPD |
 
@@ -87,7 +88,7 @@ src/
 │   └── profile.png       # Foto de perfil (seção Sobre)
 ├── components/
 │   ├── layout/           # Navbar e Footer
-│   ├── sections/         # Hero, About, Stack, Projects, Contact
+│   ├── sections/         # Hero, About, Stack, Inspiration, Projects, Contact
 │   └── ui/               # GlassCard, Button, SectionHeading
 ├── data/
 │   └── portfolio.ts      # Dados centralizados do portfólio

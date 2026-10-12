@@ -7,6 +7,7 @@ import { Navbar } from "./layout/Navbar";
 import { About } from "./sections/About";
 import { Contact } from "./sections/Contact";
 import { Hero } from "./sections/Hero";
+import { Inspiration } from "./sections/Inspiration";
 import { LiveTerminal } from "./sections/LiveTerminal";
 import { Projects } from "./sections/Projects";
 import { Stack } from "./sections/Stack";
@@ -164,6 +165,20 @@ describe("Stack", () => {
     expect(screen.getByText("OWASP ASVS")).toBeInTheDocument();
     expect(screen.getByText("Burp Suite")).toBeInTheDocument();
     expect(screen.getByText("Wazuh")).toBeInTheDocument();
+  });
+});
+
+describe("Inspiration", () => {
+  it("thanks the teams whose work inspires new ideas", () => {
+    render(<Inspiration />);
+
+    expect(screen.getByRole("heading", { name: /ideias que inspiram novos caminhos/i })).toBeInTheDocument();
+    expect(screen.getByText(/agradecimento aos times/i)).toBeInTheDocument();
+    expect(screen.getByText("NASA")).toBeInTheDocument();
+    expect(screen.getByText("SpaceXSI")).toBeInTheDocument();
+    expect(screen.getByText("Google")).toBeInTheDocument();
+    expect(screen.getByText("Anthropic")).toBeInTheDocument();
+    expect(screen.getByText("OpenAI")).toBeInTheDocument();
   });
 });
 
